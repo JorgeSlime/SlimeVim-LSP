@@ -28,10 +28,13 @@
 
 # ⚒️ Install 
 It's very Easy!
+First check if you have created the __"nvim"__ folder within __~/.config/__ next:
+
 Execute the command in your terminal:   
 ```
-git clone https://github.com/JorgeSlime/SlimeVim.git && mv ./SlimeVim/* ~/.config/nvim/ && cd ~/.config/nvim/ && nvim init.lua
+git clone https://github.com/JorgeSlime/SlimeVim-LSP.git && mv ./SlimeVim-LSP/* ~/.config/nvim/ && cd ~/.config/nvim/ && nvim init.lua
 ```
+__And Reay!!__
 
 # ✔️ Plugins
 
