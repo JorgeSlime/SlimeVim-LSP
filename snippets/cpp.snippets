@@ -1,0 +1,1394 @@
+extends c
+#TEMPLATE
+snippet hora "hora" b
+	/*
+	 * Author: Jorge_Slime
+	 * Created: `strftime('%d-%m-%Y')`
+	 * Time: `strftime('%H:%M:%S')`
+	*/
+	$1
+snippet INF 
+	using ll=long long;
+	template <class T> constexpr T INF = 0;
+	template <> constexpr int INF<int> = 1'000'000'000;
+	template <> constexpr ll INF<ll> = ll(INF<int>) * INF<int> * 2;
+	template <> constexpr unsigned long long INF<unsigned long long> = INF<ll>;
+	template <> constexpr __int128 INF<__int128> = __int128(INF<ll>) * INF<ll>;
+	template <> constexpr double INF<double> = INF<ll>;
+	template <> constexpr long double INF<long double> = INF<ll>;
+snippet redondeo
+	template <typename T>
+	T floor(T a, T b) {
+	  return a / b - (a % b && (a ^ b) < 0);
+	}
+	//redondeo a techo 
+	template <typename T>
+	T ceil(T x, T y) {
+	  return floor(x + y - 1, y);
+	}
+# SIMPLE TEMPLATE
+snippet simple
+	//THINK ONCE, CODE TWICE
+	#include "bits/stdc++.h"
+	#define LN '\n'
+	using namespace std;
+
+	int main(){
+		ios_base::sync_with_stdio(0);
+		cin.tie(0);
+		cout.tie(0);
+		$1
+		return 0;
+	}
+snippet simple11 
+	//THINK ONCE, CODE TWICE
+	#include <bits/stdc++.h>
+	using namespace std;
+	
+	#define sz(x)     ((int)x.size())
+	#define all(x)    begin(x),end(x)
+	#define rall(x) rbegin(x),rend(x)
+	#define pb              push_back
+	#define eb           emplace_back
+	#define V                  vector
+	#define LN                   '\n'
+	#define turbo_PA ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
+	typedef long long ll;
+	  
+	void solve(){
+	    $1  
+	}
+	int main(){turbo_PA;
+	    ll TT=1; 
+	    //cin>>TT;
+	    for(;TT--;) solve();
+	    return 0;
+	}
+snippet simple17
+	//THINK ONCE, CODE TWICE
+	#include <bits/stdc++.h>
+	using namespace std;
+	
+	#define sz(x)     ((int)x.size())
+	#define all(x)    begin(x),end(x)
+	#define rall(x) rbegin(x),rend(x)
+	#define pb      		push_back
+	#define eb           emplace_back
+	#define LN                   '\n'
+	
+	using ll=int64_t;
+	template<typename T> using V=vector<T>;
+	
+	void solve(){
+		$1  
+	}
+	auto main()->int32_t{
+	    cin.tie(nullptr)->sync_with_stdio(0);
+	    cin.exceptions(std::ios::failbit | std::ios::badbit);
+	    cout.tie(nullptr)->sync_with_stdio(0);
+	    ll t=1; 
+	    //cin>>t;
+	    for(;t--;) solve();
+	    return 0;
+	}
+#COMPLETOS
+snippet Z11
+	//THINK ONCE, CODE TWICE
+	
+	//C++11... solve line -> 67
+	#include <bits/stdc++.h>
+	
+	using namespace std;
+	
+	#define LN                                             		             '\n'
+	#define sz(x)                                              	   (int) x.size()
+	#define all(x)                                           	 begin(x), end(x)
+	#define rall(x)                                        	   rbegin(x), rend(x)
+	
+	#define                                  FOR1(a) for (auto _ = 0; _ < a; ++_)
+	#define                               FOR2(i, a) for (auto i = 0; i < a; ++i)
+	#define                            FOR3(i, a, b) for (auto i = a; i < b; ++i)
+	#define                      FOR4(i, a, b, c) for (auto i = a; i < b; i+=(c))
+	#define                           FOR1_R(a) for (auto i = (a)-1; i >= 0; --i)
+	#define                        FOR2_R(i, a) for (auto i = (a)-1; i >= 0; --i)
+	#define                     FOR3_R(i, a, b) for (auto i = (b)-1; i >= a; --i)
+	#define                                       overload4(a, b, c, d, e, ...) e
+	#define                                          overload3(a, b, c, d, ...) d
+	#define  forn(...) overload4(__VA_ARGS__, FOR4, FOR3, FOR2, FOR1)(__VA_ARGS__)
+	#define  rfor(...) overload3(__VA_ARGS__, FOR3_R, FOR2_R, FOR1_R)(__VA_ARGS__)
+	#define  mem(a, h)                                  memset(a, (h), sizeof(a))
+	
+	#define pb                                                          push_back
+	#define eb                                                       emplace_back
+	#define F                                                               first
+	#define S                                                              second
+	#define V                                                              vector
+	/*==========================================================================================*/
+	typedef                                                         long long ll;
+	typedef                                               unsigned long long ull;
+	typedef                                                            double dd;
+	typedef                                                     pair<int,int> ii;
+	typedef                                                       vector<ii> vii;
+	typedef                                                       vector<int> vi;
+	typedef                                                       vector<ll> vil;
+	/*==========================================================================================*/
+	//Short funcions
+	template <typename T> inline T max_(T a, T b) { return (a > b) ? a : b;}
+	template <typename T> inline T min_(T a, T b) { return (a < b) ? a : b;}
+	template <typename T> inline T abs_(T x) { return (x < 0) ? -x : x;}
+	template <typename T> inline T mcm_(T a,T b){return a*b/__gcd(a,b);}
+	
+	
+	/*==========================================================================================*/
+	//Constants
+	constexpr int dx[]={-1, 0, 1, 0},dy[]={0, 1, 0, -1};
+	constexpr int inf=INT32_MAX;
+	constexpr ll INF=INT64_MAX; //0x3f3f3f3f3f3f3f3f;
+	constexpr int MOD=1000000007;
+	constexpr int MOD99=998244353;
+	/*==========================================================================================*/
+	
+	// ===============SOLUTION======================================
+	
+	inline void XD();
+	
+	int main(){
+	   ios_base::sync_with_stdio(0);
+	   cin.tie(0);
+	   cout.tie(0);
+	   XD();
+	   return 0;
+	} 
+	
+	void solve(){
+		$1
+	}
+	
+	inline void XD(){
+	    ll TT=1;
+	    //cin>>TT;
+	    //ll TestCase(0);
+	    for(;TT--;){
+	        //TestCase++;
+	        //cout<<"Case #"<<TestCase<<":"<<LN;
+	        solve();
+	    }
+	}
+	/*
+	   -"No bajes tus sueños a la altura de tus capacidades aparentes, sino haz que
+	     estas se eleven hasta llegar a la altura de tus sueños."
+	   -"Todo mundo quiere ir al cielo pero nadie quiere morir."
+	   -"Tarde o temprano la disciplina supera al talento."
+	   -"Get A Life!!!!!"
+	*/
+
+snippet Z17 
+	//THINK ONCE, CODE TWICE
+	// template for c++17 Onwars | SOLVE_LINE-> 180
+	#if !defined(ENABLE_DEBUG) && !defined(__clang__)
+	#pragma GCC optimize("Ofast,unroll-loops")
+	//#pragma GCC target("avx2,bmi2") // ._. It does not work in Arch Linux :')
+	#endif
+	
+	#include <bits/stdc++.h>
+	#include <ext/pb_ds/tree_policy.hpp>
+	#include <ext/pb_ds/assoc_container.hpp>
+	
+	using namespace std;
+	using namespace __gnu_pbds;
+	
+	#define LN                                                               '\n'
+	#define sz(x)                                                  (int) x.size()
+	#define all(x)                                               begin(x), end(x)
+	#define rall(x)                                            rbegin(x), rend(x)
+	#define in(v)                                           forn(i,sz(v)) cin>>i;
+	#define ou(v)                                  forn(i,sz(v)) cout<<v[i]<<" ";
+	#define DBG(x)                                                           (#x)
+	#define mem(a, h)                                   memset(a, (h), sizeof(a))
+	#define pb                                                          push_back
+	#define eb                                                       emplace_back
+	#define F                                                               first
+	#define S                                                              second
+	#define MIN(v)                                           *min_element(all(v))
+	#define MAX(v)                                           *max_element(all(v))
+	#define LB(c, x)              distance((c).begin(), lower_bound(all(c), (x)))
+	#define UB(c, x)              distance((c).begin(), upper_bound(all(c), (x)))
+	#define UNIQUE(x) \
+	            sort(all(x)), x.erase(unique(all(x)), x.end()), x.shrink_to_fit()
+	#define                                  FOR1(a) for (auto _ = 0; _ < a; ++_)
+	#define                               FOR2(i, a) for (auto i = 0; i < a; ++i)
+	#define                            FOR3(i, a, b) for (auto i = a; i < b; ++i)
+	#define                      FOR4(i, a, b, c) for (auto i = a; i < b; i+=(c))
+	#define                           FOR1_R(a) for (auto i = (a)-1; i >= 0; --i)
+	#define                        FOR2_R(i, a) for (auto i = (a)-1; i >= 0; --i)
+	#define                     FOR3_R(i, a, b) for (auto i = (b)-1; i >= a; --i)
+	#define                                       overload4(a, b, c, d, e, ...) e
+	#define                                          overload3(a, b, c, d, ...) d
+	#define forn(...) overload4(__VA_ARGS__, FOR4, FOR3, FOR2, FOR1)(__VA_ARGS__)
+	#define rfor(...) overload3(__VA_ARGS__, FOR3_R, FOR2_R, FOR1_R)(__VA_ARGS__)
+	#define INT(...) \
+	  int __VA_ARGS__; \
+	  rd(__VA_ARGS__)
+	#define LL(...) \
+	  ll __VA_ARGS__; \
+	  rd(__VA_ARGS__)
+	#define vec(type, name, size) \
+	  vector<type> name(size);    \
+	  cin>>v;                     \
+	  sort(all(v));
+	/*==========================================================================================*/
+	template<typename T>  using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+	template<typename T>                       using  pq = priority_queue<T>;
+	template<typename T>  using pqg = priority_queue<T,vector<T>,greater<T>>;
+	template<typename T>                       using             V=vector<T>;
+	template<typename AA,typename BB>          using UM=unordered_map<AA,BB>;
+	template<typename T>                       using     US=unordered_set<T>;
+	template<typename AA,typename BB>          using            M=map<AA,BB>;
+	template<typename AA,typename BB>          using           P=pair<AA,BB>;
+	using                                                  uint=unsigned int;
+	using                                                       ll=long long;
+	using                                             ull=unsigned long long;
+	using                                                          dd=double;
+	using                                                    ldd=long double;
+	using                                                      i128=__int128;
+	using                                                    f128=__float128;
+	using                                             u128=unsigned __int128;
+	/*==========================================================================================*/
+	//Short funcions
+	template <typename T> inline T max_(T a, T b) { return (a > b) ? a : b;}
+	template <typename T> inline T min_(T a, T b) { return (a < b) ? a : b;}
+	template <typename T> inline T abs_(T x) { return (x < 0) ? -x : x;}
+	template <typename T> inline T mcm_(T a,T b){return a*b/__gcd(a,b);}
+	// cin->vector
+	template <typename T>
+	istream &operator>>(istream &is, vector<T> &v) {
+	  for (T &in : v) is >> in;
+	  return is;
+	}
+	// cin->vector(pair)
+	template <typename T>
+	istream &operator>>(istream &is, vector<pair<T, T>> &v) {
+	  for (auto &in : v) is >> in.first >> in.second;
+	  return is;
+	}
+	template <class T, class S>
+	inline bool chmax(T &a, const S &b) {
+	  return (a < b ? a = b, 1 : 0);
+	}
+	template <class T, class S>
+	inline bool chmin(T &a, const S &b) {
+	  return (a > b ? a = b, 1 : 0);
+	}
+	//#if __cplusplus >= 201703L
+	// -> C++17 Onwars... 
+	template <class... T>
+	void rd(T &...a) {
+	  (cin>> ... >> a);
+	}
+	//Generate ramdomic numbers c++17 onwers
+	//inline mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+	//#endif
+	// DEGUGGER PREMIUM XD 
+	template <class Head, class... Tail>
+	inline void deb(Head &&head, Tail &&...tail) {
+	    cerr << "DBG: " << head;
+	    if constexpr (sizeof...(tail) == 0) {
+	        cerr << '\n';
+	    } else {
+	        cerr << ' ';
+	        deb(forward<Tail>(tail)...);
+	    }
+	}
+	template<typename T> inline void deb(V<T>&v){ cerr<<DBG(v)<<"-> ";for(auto&&i:v) cerr<<i<<" ";cerr<<LN;}
+	template<typename T> inline void deb(V<T>&v,int n){ cerr<<DBG(v)<<"-> ";forn(i,n) cerr<<v[i]<<" ";cerr<<LN;}
+	template<typename T> inline void deb(T v[],int n){ cerr<<DBG(v)<<"-> ";forn(i,n) cerr<<v[i]<<" ";cerr<<LN;}
+	//simple print 
+	template <class Head, class... Tail>
+	inline void print(Head &&head, Tail &&...tail) {
+	    cout << head;
+	    if constexpr (sizeof...(tail) == 0) {
+	        cout << '\n';
+	    } else {
+	        cout << ' ';
+	        print(forward<Tail>(tail)...);
+	    }
+	}
+	//print Vector
+	template<typename T> inline void print(V<T>&v){ forn(i,sz(v)) cout<<v[i]<<" "; cout<<LN;}
+	template<typename T> inline void print(V<T>&v,int n){forn(i,n) cout<<v[i]<<" ";cout<<LN;}
+	template<typename T> inline void print(T v[],int n){forn(i,n) cout<<v[i]<<" ";cout<<LN;}
+	inline void YES(bool t = 1) { cout<<(t ? "YES" : "NO")<<LN; }
+	inline void NO(bool t = 1) { YES(!t); }
+	inline void Yes(bool t = 1) { cout<<(t ? "Yes" : "No")<<LN; }
+	inline void No(bool t = 1) { Yes(!t); }
+	inline void yes(bool t = 1) { cout<<(t ? "yes" : "no")<<LN; }
+	inline void no(bool t = 1) { yes(!t); }
+	/*==========================================================================================*/
+	//Constants
+	const int dx[]={-1, 0, 1, 0},dy[]={0, 1, 0, -1};
+	const int MOD=1000000007;
+	const int MOD99=998244353;
+	template <class T> constexpr T INF = 0;
+	template <> constexpr int INF<int> = 1'000'000'000;
+	template <> constexpr ll INF<ll> = ll(INF<int>) * INF<int> * 2;
+	template <> constexpr ull INF<ull> = INF<ll>;
+	template <> constexpr i128 INF<i128> = i128(INF<ll>) * INF<ll>;
+	template <> constexpr double INF<double> = INF<ll>;
+	template <> constexpr long double INF<long double> = INF<ll>;
+	/*==========================================================================================*/
+	
+	// ===============SOLUTION======================================
+	inline void XD();
+	
+	auto main()->signed{//turbo_PA;
+		ios_base::sync_with_stdio(0);
+		cin.tie();
+		cout.tie(0);
+	   	XD();
+	   	return 0;
+	} 
+	
+	void solve(){
+		$1
+	}
+	
+	inline void XD(){
+	    ll TT=1;
+	    //cin>>TT;
+	    //ll TestCase(0);
+	    for(;TT--;){
+	        //TestCase++;
+	        //cout<<"Case #"<<TestCase<<":"<<LN;
+	        solve();
+	    }
+	}
+	/*
+	   -"No bajes tus sueños a la altura de tus capacidades aparentes, sino haz que
+	     estas se eleven hasta llegar a la altura de tus sueños."
+	   -"Todo mundo quiere ir al cielo pero nadie quiere morir."
+	   -"Tarde o temprano la disciplina supera al talento."
+	   -"Get A Life!!!!!"
+	*/
+
+snippet Z
+	//THINK ONCE, CODE TWICE
+	// template for c++17 Onwars 
+	#if !defined(ENABLE_DEBUG) && !defined(__clang__) // for more check this blog https://codeforces.com/blog/entry/96344
+	#pragma GCC optimize("Ofast,unroll-loops")
+	//#pragma GCC target("avx2,bmi2") // ._. It does not work in Arch Linux :')
+	#endif
+	
+	#include <bits/stdc++.h>
+	#include <ext/pb_ds/tree_policy.hpp>
+	#include <ext/pb_ds/assoc_container.hpp>
+	
+	using namespace std;
+	using namespace __gnu_pbds;
+	
+	#define LN                                                               '\n'
+	#define sz(x)                                                  (int) x.size()
+	#define all(x)                                               begin(x), end(x)
+	#define rall(x)                                            rbegin(x), rend(x)
+	#define mem(a, h)                                   memset(a, (h), sizeof(a))
+	#define DBG(x)                                                           (#x)
+	#define pb                                                          push_back
+	#define eb                                                       emplace_back
+	#define F                                                               first
+	#define S                                                              second
+	#define MIN(v)                                           *min_element(all(v))
+	#define MAX(v)                                           *max_element(all(v))
+	#define LB(c, x)              distance((c).begin(), lower_bound(all(c), (x)))
+	#define UB(c, x)              distance((c).begin(), upper_bound(all(c), (x)))
+	#define UNIQUE(x) \
+	            sort(all(x)), x.erase(unique(all(x)), x.end()), x.shrink_to_fit()
+	#define                                  FOR1(a) for (auto _ = 0; _ < a; ++_) //for more check this blog -> https://trap.jp/post/1224/
+	#define                               FOR2(i, a) for (auto i = 0; i < a; ++i)
+	#define                            FOR3(i, a, b) for (auto i = a; i < b; ++i)
+	#define                      FOR4(i, a, b, c) for (auto i = a; i < b; i+=(c))
+	#define                           FOR1_R(a) for (auto i = (a)-1; i >= 0; --i)
+	#define                        FOR2_R(i, a) for (auto i = (a)-1; i >= 0; --i)
+	#define                     FOR3_R(i, a, b) for (auto i = (b)-1; i >= a; --i)
+	#define                                       overload4(a, b, c, d, e, ...) e
+	#define                                          overload3(a, b, c, d, ...) d
+	#define forn(...) overload4(__VA_ARGS__, FOR4, FOR3, FOR2, FOR1)(__VA_ARGS__)
+	#define rfor(...) overload3(__VA_ARGS__, FOR3_R, FOR2_R, FOR1_R)(__VA_ARGS__)
+	#define INT(...) \
+	  int __VA_ARGS__; \
+	  in(__VA_ARGS__)
+	#define LL(...) \
+	  ll __VA_ARGS__; \
+	  in(__VA_ARGS__)
+	#define vec(type, name, size) \
+	  vector<type> name(size);    \
+	  in(name);                   \
+	  sort(all(v));
+	/*==========================================================================================*/
+	template<typename T>  using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+	template<typename T>                       using  pq = priority_queue<T>;
+	template<typename T>  using pqg = priority_queue<T,vector<T>,greater<T>>;
+	template<typename T>                       using             V=vector<T>;
+	template<typename AA,typename BB>          using UM=unordered_map<AA,BB>;
+	template<typename T>                       using     US=unordered_set<T>;
+	template<typename AA,typename BB>          using            M=map<AA,BB>;
+	template<typename AA,typename BB>          using           P=pair<AA,BB>;
+	using                                                  uint=unsigned int;
+	using                                                       ll=long long;
+	using                                             ull=unsigned long long;
+	using                                                          dd=double;
+	using                                                    ldd=long double;
+	using                                                      i128=__int128;
+	using                                                    f128=__float128;
+	using                                             u128=unsigned __int128;
+	/*==========================================================================================*/
+	//Short funcions
+	template <typename T> inline T max_(T a, T b) { return (a > b) ? a : b;}
+	template <typename T> inline T min_(T a, T b) { return (a < b) ? a : b;}
+	template <typename T> inline T abs_(T x) { return (x < 0) ? -x : x;}
+	template <typename T> inline T mcm_(T a,T b){return a*b/__gcd(a,b);}
+	
+	template <class T, class S>
+	inline bool chmax(T &a, const S &b) {
+	  return (a < b ? a = b, 1 : 0);
+	}
+	template <class T, class S>
+	inline bool chmin(T &a, const S &b) {
+	  return (a > b ? a = b, 1 : 0);
+	}
+	// cin->vector
+	template <typename T>
+	istream &operator>>(istream &is, vector<T> &v) {
+	  for (T &in : v) is >> in;
+	  return is;
+	}
+	// cin->vector(pair)
+	template <typename T>
+	istream &operator>>(istream &is, vector<pair<T, T>> &v) {
+	  for (auto &in : v) is >> in.first >> in.second;
+	  return is;
+	}
+	//Generate ramdomic numbers c++17 onwers
+	//inline mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+	//#endif
+	/*==========================================================================================*/
+	//Constants
+	const int dx[]={-1, 0, 1, 0},dy[]={0, 1, 0, -1};
+	const int MOD=1000000007;
+	const int MOD99=998244353;
+	template <class T> constexpr T INF = 0;
+	template <> constexpr int INF<int> = 1'000'000'000;
+	template <> constexpr ll INF<ll> = ll(INF<int>) * INF<int> * 2;
+	template <> constexpr ull INF<ull> = INF<ll>;
+	template <> constexpr i128 INF<i128> = i128(INF<ll>) * INF<ll>;
+	template <> constexpr double INF<double> = INF<ll>;
+	template <> constexpr long double INF<long double> = INF<ll>;
+	/*==========================================================================================*/
+	// DEGUGGER PREMIUM XD 
+	template <class Head, class... Tail>
+	inline void deb(Head &&head, Tail &&...tail) {
+	    cerr << "DBG: " << head;
+	    if constexpr (sizeof...(tail) == 0) {
+	        cerr << '\n';
+	    } else {
+	        cerr << ' ';
+	        deb(forward<Tail>(tail)...);
+	    }
+	}
+	template<typename T> inline void deb(V<T>&v){ cerr<<DBG(v)<<"-> ";for(auto&&i:v) cerr<<i<<" ";cerr<<LN;}
+	template<typename T> inline void deb(V<T>&v,int n){ cerr<<DBG(v)<<"-> ";forn(i,n) cerr<<v[i]<<" ";cerr<<LN;}
+	template<typename T> inline void deb(T v[],int n){ cerr<<DBG(v)<<"-> ";forn(i,n) cerr<<v[i]<<" ";cerr<<LN;}
+	//simple print 
+	template <class Head, class... Tail>
+	inline void print_(Head &&head, Tail &&...tail) {
+	    cout << head;
+	    if constexpr (sizeof...(tail) == 0) {
+	        cout << '\n';
+	    } else {
+	        cout << ' ';
+	        print_(forward<Tail>(tail)...);
+	    }
+	}
+	//print Vector or array
+	template<typename T> inline void print_(V<T>&v){ forn(i,sz(v)) cout<<v[i]<<" "; cout<<LN;}
+	template<typename T> inline void print_(V<T>&v,int n){forn(i,n) cout<<v[i]<<" ";cout<<LN;}
+	template<typename T> inline void print_(T v[],int n){forn(i,n) cout<<v[i]<<" ";cout<<LN;}
+	//fastIO ULTRA PREMIUM XD-> ONLY FILES ENTRY
+	namespace fastio {  //for more check this blog https://judge.yosupo.jp/submission/21623
+	static constexpr uint32_t SZ = 1 << 17;
+	char ibuf[SZ];
+	char obuf[SZ];
+	char out[100];
+	// pointer of ibuf, obuf
+	uint32_t pil = 0, pir = 0, por = 0;
+	struct Pre {
+	  char num[10000][4];
+	  constexpr Pre() : num() {
+	    for (int i = 0; i < 10000; i++) {
+	      int n = i;
+	      for (int j = 3; j >= 0; j--) {
+	        num[i][j] = n % 10 | '0';
+	        n /= 10;
+	      }
+	    }
+	  }
+	} constexpr pre;
+	 
+	inline void load() {
+	  memcpy(ibuf, ibuf + pil, pir - pil);
+	  pir = pir - pil + fread(ibuf + pir - pil, 1, SZ - pir + pil, stdin);
+	  pil = 0;
+	  if (pir < SZ) ibuf[pir++] = '\n';
+	}
+	inline void flush() {
+	  fwrite(obuf, 1, por, stdout);
+	  por = 0;
+	}
+	 
+	void rd(char &c) {
+	  do {
+	    if (pil + 1 > pir) load();
+	    c = ibuf[pil++];
+	  } while (isspace(c));
+	}
+	 
+	void rd(string &x) {
+	  x.clear();
+	  char c;
+	  do {
+	    if (pil + 1 > pir) load();
+	    c = ibuf[pil++];
+	  } while (isspace(c));
+	  do {
+	    x += c;
+	    if (pil == pir) load();
+	    c = ibuf[pil++];
+	  } while (!isspace(c));
+	}
+	 
+	template <typename T>
+	void rd_real(T &x) {
+	  string s;
+	  rd(s);
+	  x = stod(s);
+	}
+	 
+	template <typename T>
+	void rd_integer(T &x) {
+	  if (pil + 100 > pir) load();
+	  char c;
+	  do
+	    c = ibuf[pil++];
+	  while (c < '-');
+	  bool minus = 0;
+	  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {
+	    if (c == '-') { minus = 1, c = ibuf[pil++]; }
+	  }
+	  x = 0;
+	  while ('0' <= c) { x = x * 10 + (c & 15), c = ibuf[pil++]; }
+	  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {
+	    if (minus) x = -x;
+	  }
+	}
+	 
+	void rd(int &x) { rd_integer(x); }
+	void rd(ll &x) { rd_integer(x); }
+	void rd(i128 &x) { rd_integer(x); }
+	void rd(uint &x) { rd_integer(x); }
+	void rd(ull &x) { rd_integer(x); }
+	void rd(u128 &x) { rd_integer(x); }
+	void rd(double &x) { rd_real(x); }
+	void rd(long double &x) { rd_real(x); }
+	void rd(f128 &x) { rd_real(x); }
+	 
+	template <class T, class U>
+	void rd(pair<T, U> &p) {
+	  return rd(p.first), rd(p.second);
+	}
+	template <size_t N = 0, typename T>
+	void rd_tuple(T &t) {
+	  if constexpr (N < std::tuple_size<T>::value) {
+	    auto &x = std::get<N>(t);
+	    rd(x);
+	    rd_tuple<N + 1>(t);
+	  }
+	}
+	template <class... T>
+	void rd(tuple<T...> &tpl) {
+	  rd_tuple(tpl);
+	}
+	 
+	template <size_t N = 0, typename T>
+	void rd(array<T, N> &x) {
+	  for (auto &d: x) rd(d);
+	}
+	template <class T>
+	void rd(V<T> &x) {
+	  for (auto &d: x) rd(d);
+	}
+	 
+	void in() {}
+	template <class H, class... T>
+	void in(H &h, T &... t) {
+	  rd(h), in(t...);
+	}
+	 
+	void wt(const char c) {
+	  if (por == SZ) flush();
+	  obuf[por++] = c;
+	}
+	void wt(const string s) {
+	  for (char c: s) wt(c);
+	}
+	void wt(const char *s) {
+	  size_t len = strlen(s);
+	  for (size_t i = 0; i < len; i++) wt(s[i]);
+	}
+	 
+	template <typename T>
+	void wt_integer(T x) {
+	  if (por > SZ - 100) flush();
+	  if (x < 0) { obuf[por++] = '-', x = -x; }
+	  int outi;
+	  for (outi = 96; x >= 10000; outi -= 4) {
+	    memcpy(out + outi, pre.num[x % 10000], 4);
+	    x /= 10000;
+	  }
+	  if (x >= 1000) {
+	    memcpy(obuf + por, pre.num[x], 4);
+	    por += 4;
+	  } else if (x >= 100) {
+	    memcpy(obuf + por, pre.num[x] + 1, 3);
+	    por += 3;
+	  } else if (x >= 10) {
+	    int q = (x * 103) >> 10;
+	    obuf[por] = q | '0';
+	    obuf[por + 1] = (x - q * 10) | '0';
+	    por += 2;
+	  } else
+	    obuf[por++] = x | '0';
+	  memcpy(obuf + por, out + outi + 4, 96 - outi);
+	  por += 96 - outi;
+	}
+	template <typename T>
+	void wt_real(T x) {
+	  ostringstream oss;
+	  oss << fixed << setprecision(15) << double(x);
+	  string s = oss.str();
+	  wt(s);
+	}
+	 
+	inline void wt(int x) { wt_integer(x); }
+	inline void wt(ll x) { wt_integer(x); }
+	inline void wt(i128 x) { wt_integer(x); }
+	inline void wt(uint x) { wt_integer(x); }
+	inline void wt(ull x) { wt_integer(x); }
+	inline void wt(u128 x) { wt_integer(x); }
+	inline void wt(double x) { wt_real(x); }
+	inline void wt(long double x) { wt_real(x); }
+	inline void wt(f128 x) { wt_real(x); }
+	 
+	template <class T, class U>
+	void wt(const pair<T, U> val) {
+	  wt(val.first);
+	  wt(' ');
+	  wt(val.second);
+	}
+	
+	template <size_t N = 0, typename T>
+	void wt_tuple(const T t) {
+	  if constexpr (N < std::tuple_size<T>::value) {
+	    if constexpr (N > 0) { wt(' '); }
+	    const auto x = std::get<N>(t);
+	    wt(x);
+	    wt_tuple<N + 1>(t);
+	  }
+	}
+	template <class... T>
+	void wt(tuple<T...> tpl) {
+	  wt_tuple(tpl);
+	}
+	template <class T, size_t S>
+	void wt(const array<T, S> val) {
+	  auto n = val.size();
+	  for (size_t i = 0; i < n; i++) {
+	    if (i) wt(' ');
+	    wt(val[i]);
+	  }
+	}
+	template <class T>
+	void wt(const vector<T> val) {
+	  auto n = val.size();
+	  for (size_t i = 0; i < n; i++) {
+	    if (i) wt(' ');
+	    wt(val[i]);
+	  }
+	}
+	void print() { wt('\n'); }
+	template <class Head, class... Tail>
+	void print(Head &&head, Tail &&... tail) {
+	  wt(head);
+	  if (sizeof...(Tail)) wt(' ');
+	  print(forward<Tail>(tail)...);
+	}
+	// gcc expansion. called automaticall after main.
+	void __attribute__((destructor)) _d() { flush(); }
+	} // namespace fastio
+	using fastio::in;
+	using fastio::print;
+	using fastio::flush;
+	//YES or NO
+	inline void YES(bool t = 1) { print(t ? "YES" : "NO"); }
+	inline void NO(bool t = 1) { YES(!t); }
+	inline void Yes(bool t = 1) { print(t ? "Yes" : "No"); }
+	inline void No(bool t = 1) { Yes(!t); }
+	inline void yes(bool t = 1) { print(t ? "yes" : "no"); }
+	inline void no(bool t = 1) { yes(!t); }
+	// ===============SOLUTION======================================
+	inline void XD();
+	
+	auto main()->signed{//turbo_PA;
+	   cin.tie(nullptr)->sync_with_stdio(false);
+	   cin.exceptions(std::ios::failbit | std::ios::badbit);
+	   cout.tie(nullptr)->sync_with_stdio(false); 
+	   XD();
+	   return 0;
+	} 
+	
+	void solve(){
+	    $1
+	}
+	
+	inline void XD(){
+	    ll TT=1;
+	    //in(TT);
+	    //cin>>TT;
+	    //ll TestCase(0);
+	    for(;TT--;){
+	        //TestCase++;
+	        //cout<<"Case #"<<TestCase<<":"<<LN;
+	        solve();
+	    }
+	}
+	/*
+	   -"No bajes tus sueños a la altura de tus capacidades aparentes, sino haz que
+	     estas se eleven hasta llegar a la altura de tus sueños."
+	   -"Todo mundo quiere ir al cielo pero nadie quiere morir."
+	   -"Tarde o temprano la disciplina supera al talento."
+	   -"Get A Life!!!!!"
+	*/
+#TURBO
+snippet turbo 
+	ios_base::sync_with_stdio(0);
+	cin.tie();
+	cout.tie(0);
+snippet turbo17
+	cin.tie(nullptr)->sync_with_stdio(false);
+	cin.exceptions(std::ios::failbit | std::ios::badbit);
+	cout.tie(nullptr)->sync_with_stdio(false); 
+snippet fastIO11
+	static struct FastInput {
+		static constexpr int BUF_SIZE = 1 << 20;
+		char buf[BUF_SIZE];
+		size_t chars_read = 0;
+		size_t buf_pos = 0;
+		FILE *in = stdin;
+		char cur = 0;
+		inline char get_char() {
+			if (buf_pos >= chars_read) {
+				chars_read = fread(buf, 1, BUF_SIZE, in);
+				buf_pos = 0;
+				buf[0] = (chars_read == 0 ? -1 : buf[0]);
+			}
+			return cur = buf[buf_pos++];
+		}
+	 
+		inline void tie(std::nullptr_t) {}
+	 
+		inline explicit operator bool() {
+			return cur != -1;
+		}
+	 
+		inline static bool is_blank(char c) {
+			return c <= ' ';
+		}
+	 
+		inline bool skip_blanks() {
+			while (is_blank(cur) && cur != -1) {
+				get_char();
+			}
+			return cur != -1;
+		}
+	 
+		inline FastInput& operator>>(char& c) {
+			skip_blanks();
+			c = cur;
+			return *this;
+		}
+	 
+		inline FastInput& operator>>(string& s) {
+			if (skip_blanks()) {
+				s.clear();
+				do {
+					s += cur;
+				} while (!is_blank(get_char()));
+			}
+			return *this;
+		}
+	 
+		template <typename T>
+			inline FastInput& read_integer(T& n) {
+				// unsafe, doesn't check that characters are actually digits
+				n = 0;
+				if (skip_blanks()) {
+					int sign = +1;
+					if (cur == '-') {
+						sign = -1;
+						get_char();
+					}
+					do {
+						n += n + (n << 3) + cur - '0';
+					} while (!is_blank(get_char()));
+					n *= sign;
+				}
+				return *this;
+			}
+	 
+		template <typename T>
+			inline typename enable_if<is_integral<T>::value, FastInput&>::type operator>>(T& n) {
+				return read_integer(n);
+			}
+	 
+	#if !defined(_WIN32) || defined(_WIN64)
+		inline FastInput& operator>>(__int128& n) {
+			return read_integer(n);
+		}
+	#endif
+		template <typename T>
+			inline typename enable_if<is_floating_point<T>::value, FastInput&>::type operator>>(T& n) {
+				// not sure if really fast, for compatibility only
+				n = 0;
+				if (skip_blanks()) {
+					string s;
+					(*this) >> s;
+					sscanf(s.c_str(), "%lf", &n);
+				}
+				return *this;
+			}
+	} fast_input;
+	#define cin fast_input
+	
+	//===================================CODE======================================================
+	$1
+snippet fastIO17 
+	//fastIO ULTRA PREMIUM-> ONLY FILES ENTRY
+	namespace fastio {  //for more check this blog https://judge.yosupo.jp/submission/21623
+	static constexpr uint32_t SZ = 1 << 17;
+	char ibuf[SZ];
+	char obuf[SZ];
+	char out[100];
+	// pointer of ibuf, obuf
+	uint32_t pil = 0, pir = 0, por = 0;
+	struct Pre {
+	  char num[10000][4];
+	  constexpr Pre() : num() {
+	    for (int i = 0; i < 10000; i++) {
+	      int n = i;
+	      for (int j = 3; j >= 0; j--) {
+	        num[i][j] = n % 10 | '0';
+	        n /= 10;
+	      }
+	    }
+	  }
+	} constexpr pre;
+	 
+	inline void load() {
+	  memcpy(ibuf, ibuf + pil, pir - pil);
+	  pir = pir - pil + fread(ibuf + pir - pil, 1, SZ - pir + pil, stdin);
+	  pil = 0;
+	  if (pir < SZ) ibuf[pir++] = '\n';
+	}
+	inline void flush() {
+	  fwrite(obuf, 1, por, stdout);
+	  por = 0;
+	}
+	 
+	void rd(char &c) {
+	  do {
+	    if (pil + 1 > pir) load();
+	    c = ibuf[pil++];
+	  } while (isspace(c));
+	}
+	 
+	void rd(string &x) {
+	  x.clear();
+	  char c;
+	  do {
+	    if (pil + 1 > pir) load();
+	    c = ibuf[pil++];
+	  } while (isspace(c));
+	  do {
+	    x += c;
+	    if (pil == pir) load();
+	    c = ibuf[pil++];
+	  } while (!isspace(c));
+	}
+	 
+	template <typename T>
+	void rd_real(T &x) {
+	  string s;
+	  rd(s);
+	  x = stod(s);
+	}
+	 
+	template <typename T>
+	void rd_integer(T &x) {
+	  if (pil + 100 > pir) load();
+	  char c;
+	  do
+	    c = ibuf[pil++];
+	  while (c < '-');
+	  bool minus = 0;
+	  if constexpr (is_signed<T>::value || is_same_v<T, __int128>) {
+	    if (c == '-') { minus = 1, c = ibuf[pil++]; }
+	  }
+	  x = 0;
+	  while ('0' <= c) { x = x * 10 + (c & 15), c = ibuf[pil++]; }
+	  if constexpr (is_signed<T>::value || is_same_v<T, __int128>) {
+	    if (minus) x = -x;
+	  }
+	}
+	 
+	void rd(int &x) { rd_integer(x); }
+	void rd(long long &x) { rd_integer(x); }
+	void rd(__int128 &x) { rd_integer(x); }
+	void rd(unsigned int &x) { rd_integer(x); }
+	void rd(unsigned long long &x) { rd_integer(x); }
+	void rd(unsigned __int128 &x) { rd_integer(x); }
+	void rd(double &x) { rd_real(x); }
+	void rd(long double &x) { rd_real(x); }
+	void rd(__float128 &x) { rd_real(x); }
+	 
+	template <class T, class U>
+	void rd(pair<T, U> &p) {
+	  return rd(p.first), rd(p.second);
+	}
+	template <size_t N = 0, typename T>
+	void rd_tuple(T &t) {
+	  if constexpr (N < std::tuple_size<T>::value) {
+	    auto &x = std::get<N>(t);
+	    rd(x);
+	    rd_tuple<N + 1>(t);
+	  }
+	}
+	template <class... T>
+	void rd(tuple<T...> &tpl) {
+	  rd_tuple(tpl);
+	}
+	 
+	template <size_t N = 0, typename T>
+	void rd(array<T, N> &x) {
+	  for (auto &d: x) rd(d);
+	}
+	template <class T>
+	void rd(vector<T> &x) {
+	  for (auto &d: x) rd(d);
+	}
+	 
+	void in() {}
+	template <class H, class... T>
+	void in(H &h, T &... t) {
+	  rd(h), in(t...);
+	}
+	 
+	void wt(const char c) {
+	  if (por == SZ) flush();
+	  obuf[por++] = c;
+	}
+	void wt(const string s) {
+	  for (char c: s) wt(c);
+	}
+	void wt(const char *s) {
+	  size_t len = strlen(s);
+	  for (size_t i = 0; i < len; i++) wt(s[i]);
+	}
+	 
+	template <typename T>
+	void wt_integer(T x) {
+	  if (por > SZ - 100) flush();
+	  if (x < 0) { obuf[por++] = '-', x = -x; }
+	  int outi;
+	  for (outi = 96; x >= 10000; outi -= 4) {
+	    memcpy(out + outi, pre.num[x % 10000], 4);
+	    x /= 10000;
+	  }
+	  if (x >= 1000) {
+	    memcpy(obuf + por, pre.num[x], 4);
+	    por += 4;
+	  } else if (x >= 100) {
+	    memcpy(obuf + por, pre.num[x] + 1, 3);
+	    por += 3;
+	  } else if (x >= 10) {
+	    int q = (x * 103) >> 10;
+	    obuf[por] = q | '0';
+	    obuf[por + 1] = (x - q * 10) | '0';
+	    por += 2;
+	  } else
+	    obuf[por++] = x | '0';
+	  memcpy(obuf + por, out + outi + 4, 96 - outi);
+	  por += 96 - outi;
+	}
+	template <typename T>
+	void wt_real(T x) {
+	  ostringstream oss;
+	  oss << fixed << setprecision(15) << double(x);
+	  string s = oss.str();
+	  wt(s);
+	}
+	 
+	inline void wt(int x) { wt_integer(x); }
+	inline void wt(long long x) { wt_integer(x); }
+	inline void wt(__int128 x) { wt_integer(x); }
+	inline void wt(unsigned int x) { wt_integer(x); }
+	inline void wt(unsigned long long x) { wt_integer(x); }
+	inline void wt(unsigned __int128 x) { wt_integer(x); }
+	inline void wt(double x) { wt_real(x); }
+	inline void wt(long double x) { wt_real(x); }
+	inline void wt(__float128 x) { wt_real(x); }
+	 
+	template <class T, class U>
+	void wt(const pair<T, U> val) {
+	  wt(val.first);
+	  wt(' ');
+	  wt(val.second);
+	}
+	
+	template <size_t N = 0, typename T>
+	void wt_tuple(const T t) {
+	  if constexpr (N < std::tuple_size<T>::value) {
+	    if constexpr (N > 0) { wt(' '); }
+	    const auto x = std::get<N>(t);
+	    wt(x);
+	    wt_tuple<N + 1>(t);
+	  }
+	}
+	template <class... T>
+	void wt(tuple<T...> tpl) {
+	  wt_tuple(tpl);
+	}
+	template <class T, size_t S>
+	void wt(const array<T, S> val) {
+	  auto n = (int)val.size();
+	  for (size_t i = 0; i < n; i++) {
+	    if (i) wt(' ');
+	    wt(val[i]);
+	  }
+	}
+	template <class T>
+	void wt(const vector<T> val) {
+	  auto n =(int)val.size();
+	  for (size_t i = 0; i < n; i++) {
+	    if (i) wt(' ');
+	    wt(val[i]);
+	  }
+	}
+	void print() { wt('\n'); }
+	template <class Head, class... Tail>
+	void print(Head &&head, Tail &&... tail) {
+	  wt(head);
+	  if (sizeof...(Tail)) wt(' ');
+	  print(forward<Tail>(tail)...);
+	}
+	// gcc expansion. called automaticall after main.
+	void __attribute__((destructor)) _d() { flush(); }
+	} // namespace fastio
+	using fastio::in;
+	using fastio::print;
+	using fastio::flush;
+	
+	//===================================CODE======================================================
+	$1
+#GRAPHS
+snippet Dfs 
+	const int N=1e5+7;
+	vector<int> G[N];
+	bool vis[N];
+	void Dfs(int v){
+		vis[v]=1;
+		for(auto &&u:G[v]){
+			if(!vis[u]){
+				Dfs(u);
+			}
+		}
+	}
+snippet Dfs_Lambda 
+	vector<vector<int>> G(n+1);
+	vector<bool> vis(n+1,0);
+	auto Dfs=[&vis,&G](auto&& self,int v)->void{
+		vis[v]=1;
+		for(auto&& u:G[v]){
+			if(!vis[u]){
+				self(self,u);
+			}
+		}
+	};
+snippet Bfs 
+	const int N=1e5+7;
+	vector<int> G[N];
+	int d[N],p[N];
+	bool vis[N];
+	template<typename T>
+	    void Bfs(T s){
+	        deque<T> q;
+	        q.emplace_back(s);
+	        vis[s]=1;
+	        p[s]=-1;
+	        while(!q.empty()){
+	            T v=q.front();
+	            q.pop_front();
+	            for(auto u:G[v]){
+	                if(!vis[u]){
+	                    vis[u]=1;
+	                    d[u]=d[v]+1;
+	                    p[u]=v;
+	                    q.emplace_back(u);
+	                }
+	            }
+	        }
+	    }
+	/*
+	    //imprimir el camino mas corto
+	    int s,f; cin>>s>>f;
+	    s--,f--;
+	    bfs(s);
+	    vi a;
+	    for(int i=f;i!=-1;i=p[i]) a.emplace_back(i);
+	    for(int i=sz(a)-1;~i;--i) cout<<a[i]<<" ";
+	*/
+snippet Bfs_Lambda 
+	V<V<int>> G(n+1);
+	V<bool> vis(n+1);
+	V<int> p(n+1),d(n+1);
+	auto Bfs=[&](int s)->void{
+	    queue<int> q;
+	    q.emplace(s);
+	    vis[s]=1;
+	    p[s]=-1;
+	    while(!q.empty()){
+	        int v=q.front();
+	        q.pop();
+	        for(auto u:G[v]){
+	            if(!vis[u]){
+	                vis[u]=1;
+	                d[u]=d[v]+1;
+	                p[u]=v;
+	                q.emplace(u);
+	            }
+	        }
+	    }
+	};
+snippet Dijkstra
+	template<typename T,typename GT>
+	pair<V<T>,V<int>> Dijkstra(V<V<pair<GT,GT>>>& G,int s){
+	    auto N=(int)G.size();
+	    V<T> dist(N,INF<T>);
+	    V<int> par(N,-1);
+	    priority_queue<pair<T,int>,V<pair<T,int>>, greater<pair<T,int>>> q;
+	    dist[s]=0;
+	    q.emplace(0,s);
+	    while(!q.empty()){
+	        auto[dv,v]=q.top();
+	        q.pop();
+	        if(dv>dist[v]) continue;
+	        for(auto u:G[v]){
+	            auto [to,cost]=u;
+	            if(dist[v]+cost<dist[to]){
+	                dist[to]=dist[v]+cost;
+	                par[to]=v;
+	                q.emplace(dist[to],to);
+	            }
+	        }      
+	    }
+	    return{dist,par};
+	} 
+	V<int> camino(vector<int> &p,int t){
+	    V<int> v={t};
+	    while (p[v.back()] != -1) v.pb(p[v.back()]);
+	    reverse(all(v));
+	    return v;
+	}
+	//declaracion:
+	//auto [dist,par]=Dijkstra<type>(G,1);
+	//if(dist[n]==INF) -1
+	//auto ans=camino(p,n);
+#MATH
+snippet presum 
+	template <typename T, typename U>
+	V<T> presum(V<U> &A, bool off = 1) {
+	  int N = (int)A.size();
+	  V<T> B(N + 1);
+	  for(int i=0;i<N;i++) { B[i + 1] = B[i] + A[i]; }
+	  if (!off) B.erase(B.begin());
+	  return B;
+	}
+snippet binpow 
+	template<typename T>
+	T binpow(T a, T b) {
+	    T res=1;
+	    while(b>0) {
+	        if(b&1) res = res * a;
+	        a=a*a;
+	        b>>=1;
+	    }
+	    return res;
+	}
+snippet binpowMOD 
+	template<typename T>
+	T binpow(T a, T b, T m) {
+	    a %= m;
+	    T res = 1;
+	    while (b > 0) {
+	        if (b & 1) res=res*a%m;
+	        a = a * a % m;
+	        b >>= 1;
+	    }
+	    return res;
+	}
+snippet cnt_table 
+	//table:
+	//decalration -> autp cnt=cnt_table<type>(v,n);
+	template<typename A ,typename T>
+	V<A> cnt_table(V<T>&v,int n,bool ok=1){
+	    V<T> c(ok?n+1:n);
+	    for(auto &&x:v){
+	        if(!ok) x--;
+	        c[x]++;
+	    }
+	    return c;
+	}
+	//declaration -> auto cnt=cnt_table(s);
+	template<typename A>
+	V<A> cnt_table(string&s,bool ok=1){
+	    // 0 mayus 1 minus
+	    V<A> c(26,0);
+	    for(auto &&x:s){
+	        ok ? c[x-'a']++ : c[x-'A']++;
+	    }
+	    return c;
+	}
+snippet criba 
+	const int N=1e6;
+	V<int> prime;
+	bool vis[N];
+	//Criba de Eratosthenes O(N*Log(N))
+	void criba(int n) {
+		for (int i=2;i<n;++i) {
+			if (!vis[i]) prime.emplace_back(i);
+			for (int j=2;i*j<n;++j)
+				vis[i * j]=1;
+		}
+	}
+	//Criba Lineal O(N);
+	void criba_lineal(int n) {
+		for (int i = 2; i < n; ++i) {
+			if (!vis[i]) prime.push_back (i);
+			for (int j = 0; j < prime.size () && i * prime[j] < n; ++j) {
+				vis[i * prime[j]] = 1;
+				if (i % prime[j] == 0) break;
+			}
+		}
+	}
+#DATA_STRUCTURES
+snippet Busqueda
+	template <class T, class F>
+	T find_first(T l, T r, F&& f) {
+	    --l,++r;
+	    while (r - l > 1) {
+	        T m =l+(r-l)/2;
+	        if (f(m)) {
+	            l = m;
+	        } else {
+	            r = m;
+	        }
+	    }
+	    return r;
+	}
+	int bs(const V<int>& a, int x) {
+	    auto f = [&](int i)->bool{
+	        return a[i] < x;  //lower -> a[i]<x  | upper-> a[i]<=x
+	    };
+	    int n = (int)a.size();
+	    int pos = find_first(0,n-1,f);
+	    //if (pos==n||a[pos]!=x) return n;
+	    return pos;
+	}
+snippet sparce_table 
+	struct SparseTable {
+	    int n;
+	    vector<vector<int>> st;
+	    SparseTable(const vector<int>& arr) {
+	        n =(int)arr.size();
+	        int logn = 32 - __builtin_clz(n);
+	        st.assign(n, vector<int>(logn));
+	        for (int i = 0; i < n; i++) {
+	            st[i][0] = arr[i];
+	        }
+	        for (int j = 1; (1 << j) <= n; j++) {
+	            for (int i = 0; i + (1 << j) <= n; i++) {
+	                st[i][j] = min(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
+	            }
+	        }
+	    }
+	    int query(int l, int r) {
+	        int j = 31 - __builtin_clz(r - l + 1);
+	        return min(st[l][j], st[r - (1 << j) + 1][j]);
+	    }
+	};
+
+snippet SegmentTree 
+	const int N=1e5+7;
+	struct STree{
+	    int T[4*N];
+	    void modify(int n){
+	    }
+	    void init(const vector<int> &a,int n,int L,int R){
+	        if(L==R){
+	            T[n]=a[L];
+	            return;
+	        }
+	        int M=(L+R)>>1;
+	        int x=n<<1;
+	        init(a,x,L,M); 
+	        init(a,x|1,M+1,R);
+	        modify(n);
+	    }
+	    void update(int n,int L,int R,int I,int val){
+	        if(L==R){
+	            T[n]=val;
+	            return;
+	        }
+	        int M=(L+R)>>1;
+	        int x=n<<1;
+	        if(I<=M) update(x,L,M,I,val);
+	        else update(x|1,M+1,R,I,val);
+	        modify(n);
+	    }
+	};
+#STRINGS
+snippet z_funtion "funcion Z"
+	vector<int> z_function(string s) {
+	    int n = s.size();
+	    vector<int> z(n);
+	    int l = 0, r = 0;
+	    for(int i = 1; i < n; i++) {
+	        if(i < r) {
+	            z[i] = min(r - i, z[i - l]);
+	        }
+	        while(i + z[i] < n && s[z[i]] == s[i + z[i]]) {
+	            z[i]++;
+	        }
+	        if(i + z[i] > r) {
+	            l = i;
+	            r = i + z[i];
+	        }
+	    }
+	    return z;
+	}

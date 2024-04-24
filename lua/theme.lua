@@ -1,0 +1,21 @@
+--MoonFly
+vim.cmd [[colorscheme moonfly]]
+--Modus
+--vim.cmd([[colorscheme modus]]) -- modus_operandi, modus_vivendi
+--Gruber
+--vim.cmd.colorscheme("gruber-darker")
+--Nightly
+--vim.cmd "colorscheme nightly"
+--TokyoNight
+--vim.cmd[[colorscheme tokyonight]]
+--require('lualine').setup {
+--  options = {
+--    theme = 'tokyonight'
+--  }
+--}
+--NightFox
+--vim.cmd("colorscheme carbonfox")
+
+--Oxocarbon
+--vim.opt.background = "dark"
+--vim.cmd.colorscheme "oxocarbon"

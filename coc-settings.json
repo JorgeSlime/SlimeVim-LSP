@@ -1,0 +1,12 @@
+{
+    "snippets.userSnippetsDirectory": "~/.config/nvim/snippets",
+    "rust-analyzer.enable": {
+        "type": "boolean",
+        "markdownDescription": "Enable `coc-rust-analyzer`",
+        "default": true
+    }
+}
+
+
+
+

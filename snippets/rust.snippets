@@ -1,0 +1,5 @@
+snippet IO "entrada" b
+let mut buffer = String::new();
+let stdin = std::io::stdin();
+stdin.read_line(&mut buffer).unwrap();
+endsnippet
