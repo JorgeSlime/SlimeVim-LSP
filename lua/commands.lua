@@ -136,8 +136,8 @@ function CompileWithPdflatex()
   local log_filename = filename .. '.log'
 
   -- Comando para compilar el documento con pdflatex y -shell-escape
-  local compile_command = 'pdflatex -shell-escape ' .. filename .. '.tex > ' .. log_filename .. ' 2>&1'
-
+  local compile_command = 'pdflatex -interaction=nonstopmode -shell-escape ' .. filename .. ' > ' .. log_filename --.. ' 2>&1'
+  --local compile_command = 'latexmk -pdf -interaction=nonstopmode -cd ' .. filename .. '.tex > ' .. log_filename
   -- Ejecutar el comando en el sistema
   local status = os.execute(compile_command)
 
@@ -146,9 +146,9 @@ function CompileWithPdflatex()
      vim.notify("Programa compilado correctamente")
     --print('El programa se ha compilado correctamente.')
     -- Comando para abrir el archivo PDF generado en Zathura en segundo plano
-    local view_command = 'zathura ' .. filename .. '.pdf' .. ' &'
+    --local view_command = 'zathura ' .. filename .. '.pdf' .. ' &'
     -- Ejecutar el comando en el sistema
-    os.execute(view_command)
+    --os.execute(view_command)
   else
     print('Error: El programa no se ha compilado correctamente. Revisa el archivo ' .. log_filename .. ' para obtener más detalles.')
   end

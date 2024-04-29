@@ -1,31 +1,39 @@
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
 -- Cambiar entre ventanas 
-vim.keymap.set('n', '<C-l>', ':BufferLineCycleNext<CR>', { silent = true })
-vim.keymap.set('n', '<C-h>', ':BufferLineCyclePrev<CR>', { silent = true })
-
+map('n', '<C-l>', ':BufferNext<CR>', opts)
+map('n', '<C-h>', ':BufferPrevious<CR>', opts)
+map('n', '<C-w>', ':BufferClose<CR>',opts)
 -- Para abrir nuevas ventanas
-vim.keymap.set('n', '<C-n>', ':tabnew<CR>', { silent = true })
+map('n', '<C-n>', ':tabnew<CR>',opts)
 
 --Utilidades
 -- Mapeo para copiar todo
-vim.keymap.set('n', '<C-a>', '<Esc>ggVG<CR>', { silent = true })
+map('n', '<C-a>', '<Esc>ggVG<CR>', opts)
 -- Mapeo para simular Ctrl c
-vim.keymap.set('v', '<C-c>', '"+y', { noremap = true })
--- Comando para abrir una terminal flotante
-vim.keymap.set('n', '<C-t>', ':FloatermToggle<CR>', { silent = true })
--- Mapeo para cerrar buffer(pestaña) en Bufferline
-vim.keymap.set('n', '<C-w>', ':Bdelete<CR>', opts)
+map('v', '<C-c>', '"+y', { noremap = true })
+---- Comando para abrir una terminal flotante
+--vim.api.nvim_set_keymap('n', '<C-t>', ':ToggleTerm"<CR>', {silent = true})
+--vim.api.nvim_set_keymap('i', '<C-t>', '<Esc>:ToggleTerm"<CR>', {silent = true})
+--vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', {})
 
 -- Abrir Alpha Dashborad
-vim.keymap.set('n', '<C-z>', ':Alpha<CR>', opts)
+map('n', '<C-z>', ':Alpha<CR>', opts)
 
 -- Mapeo para Telescope
-vim.keymap.set('n', '<C-f>', '<cmd>Telescope find_files<cr>', opts)
---vim.keymap.set('n', '<A-f>', '<cmd>Telescope live_grep<cr>', opts)
-vim.keymap.set('n', '<A-f>', '<cmd>Telescope oldfiles<cr>', opts)
+map('n', '<C-f>', '<cmd>Telescope find_files<cr>', opts)
+--map('n', '<A-f>', '<cmd>Telescope live_grep<cr>', opts)
+map('n', '<A-f>', '<cmd>Telescope oldfiles<cr>', opts)
 
 -- Split commands
-vim.keymap.set('n', '<A-l>', '<C-w>l', opts)
-vim.keymap.set('n', '<A-h>', '<C-w>h', opts)
-vim.keymap.set('n', '<A-v>', '<C-w>v', opts)
+map('n', '<A-l>', '<C-w>l', opts)
+map('n', '<A-h>', '<C-w>h', opts)
+map('n', '<A-v>', '<C-w>v', opts)
+-- Definir una función para reemplazar <Esc> con <C-\><C-n>
+function my_escape_mapping()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, true, true), "n", true)
+end
 
+-- Crear el mapeo de tecla en modo normal y modo visual
+vim.api.nvim_set_keymap('t', '<Esc>', '<cmd>lua my_escape_mapping()<CR>', { noremap = true, silent = true })
 

@@ -4,7 +4,7 @@ return {
         config = function()
           require('lsp-progress').setup()
         end
-    },  
+    },
     {
         -- Configuración para lualine.nvim
         'nvim-lualine/lualine.nvim',
@@ -61,11 +61,11 @@ return {
                             cond=require("lazy.status").has_updates,
                             color={fg="#ff9e64"},
                         },
-                        {
-                            function()
-                                return require('lsp-progress').progress()
-                            end,
-                        },
+                        --{
+                        --    function()
+                        --        return require('lsp-progress').progress()
+                        --    end,
+                        --},
                     },
                     lualine_y = {{lspClient,icon=""},"filetype","progress","searchcount"},
                     lualine_z = {{'location',left_padding=2,}}

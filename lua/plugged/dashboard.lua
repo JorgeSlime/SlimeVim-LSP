@@ -1,14 +1,14 @@
 -- Verificar si no se han proporcionado argumentos de archivo al iniciar Neovim
-local function check_startup_files()
-    return #vim.fn.argv() >1
-end
-
--- Iniciar Alpha automáticamente si no se proporcionan argumentos de archivo
-if check_startup_files() then
-    vim.defer_fn(function()
-        vim.cmd("Alpha")
-    end, 0)
-end
+--local function check_startup_files()
+--    return #vim.fn.argv() >1
+--end
+--
+---- Iniciar Alpha automáticamente si no se proporcionan argumentos de archivo
+--if check_startup_files() then
+--    vim.defer_fn(function()
+--        vim.cmd("Alpha")
+--    end, 0)
+--end
 
 
 return{

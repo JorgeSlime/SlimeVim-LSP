@@ -1,4 +1,5 @@
 return {
+          -- your configuration comes here
     {
         "williamboman/mason.nvim",
         lazy = false,
@@ -21,41 +22,39 @@ return {
 			})
 		end
     },
-    --{
-    --    "SmiteshP/nvim-navic",
-    --    dependencies ={
-    --        "neovim/nvim-lspconfig",
-    --    }
-    --},
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
         lazy = false,
-        config = function()  
+        config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            capabilities.textDocument.completion.completionItem.snippetSupport = true
             local lspconfig = require("lspconfig")
             --local navic = require("nvim-navic")
+            --local on_attach = function(client, bufnr)
+            --    if client.server_capabilities.documentSymbolProvider then
+            --        navic.attach(client, bufnr)
+            --    end
+            --end
+            --FOR C++
             lspconfig.clangd.setup({
                 capabilities = capabilities,
-                --on_attach = function(client, bufnr)
-                --    navic.attach(client, bufnr)
-                --end
+                --on_attach= on_attach
             })
+
+            -- FOR LUA
             lspconfig.lua_ls.setup({
                 capabilities = capabilities,
                  settings = {
                     Lua = {
                       runtime = {
-                        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
                         version = "LuaJIT",
                         path = vim.split(package.path, ";"),
                       },
                       diagnostics = {
-                        -- Get the language server to recognize the `vim` global
                         globals = { "vim" },
                       },
                       workspace = {
-                        -- Make the server aware of Neovim runtime files and plugins
                         library = { vim.env.VIMRUNTIME },
                         checkThirdParty = false,
                       },
@@ -65,12 +64,16 @@ return {
                     },
                 },
             })
+
+            --FOR C#
             lspconfig.csharp_ls.setup({
                 capabilities = capabilities,
                 cmd ={ "csharp-ls" },
                 init_options= {AutomaticWorkspaceInit = true},
                 filetypes ={"cs"}
             })
+
+            --FOR LaTeX
             lspconfig.texlab.setup({
                 capabilities = capabilities,
                 cmd={ "texlab" },
@@ -101,6 +104,47 @@ return {
                     },
                 }
             })
+            --FOR BASH
+            lspconfig.bashls.setup({
+                capabilities = capabilities,
+                settings={
+                    {
+                        bashIde = {
+                            globPattern = "*@(.sh|.inc|.bash|.command)",
+                        },
+                    },
+                    cmd={ "bash-language-server", "start" },
+                },
+            })
+            --FOR  HTML
+
+            lspconfig.html.setup({
+                capabilities = capabilities,
+                on_attach = function (client, bufnr)
+                    client.server_capabilities.document_formatting = false
+                    on_attach(client, bufnr)
+                end,
+                init_options = {
+                    configurationSection = { "html", "css", "javascript" },
+                    embeddedLanguages = {
+                        css = true,
+                        javascript = true,
+                    },
+                    provideFormatter = true,
+                },
+            })
+            --FRON CSS
+            lspconfig.cssls.setup({
+                capabilities = capabilities,
+            })
+            -- FOR javascript ans Typescrpt
+            local servers = {'tsserver','eslint'}
+            for _, lsp in pairs(servers) do
+                lspconfig[lsp].setup {
+                    --on_attach = on_attach,
+                    capabilites = capabilities,
+                }
+            end
         end
     }
 }
