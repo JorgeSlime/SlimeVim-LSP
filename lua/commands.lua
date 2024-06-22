@@ -21,7 +21,7 @@ vim.cmd('command! INPUT lua OpenInput()')
 
 function compile_program()
     local program_name = vim.fn.expand('%:r')
-    local compile_command = 'g++ -std=c++20 -O2 -Wall -Wextra -Wunknown-pragmas -o "' .. program_name .. '" "' .. vim.fn.expand('%') .. '"'
+    local compile_command = 'g++ -std=c++20 -O2 -Wall -Wextra -Wunknown-pragmas -DSLIME -o "' .. program_name .. '" "' .. vim.fn.expand('%') .. '"'
     -- Compilar el programa
     local compile_output = vim.fn.systemlist(compile_command)
     -- Verificar si hubo errores de compilación
@@ -35,24 +35,6 @@ function compile_program()
         --print('Programa compilado correctamente')
     end
 end
-function compile_programXD()
-    local original_program_name = vim.fn.expand('%:r')
-    local program_name = string.gsub(original_program_name, ' ', '_')  -- Reemplazar espacios por guiones bajos en el nombre
-
-    local compile_command = 'g++ -std=c++20 -O2 -Wall -Wextra -Wunknown-pragmas -o "' .. original_program_name .. '" "' .. vim.fn.expand('%') .. '"'
-    -- Compilar el programa
-    local compile_output = vim.fn.systemlist(compile_command)
-    -- Verificar si hubo errores de compilación
-    if vim.v.shell_error ~= 0 then
-        vim.api.nvim_err_writeln('Error de compilación:')
-        for _, error_line in ipairs(compile_output) do
-            vim.api.nvim_err_writeln(error_line)
-        end
-    else
-        print('Programa compilado correctamente')
-    end
-end
---vim.cmd('command! compilar lua compile_program()')
 vim.api.nvim_set_keymap('n', '<C-x>', '<cmd>lua compile_program()<cr>', { noremap = true, silent = true })
 vim.cmd('command! CC lua compile_program()')
 -------------------------------------------------------------------------------------------------------------------------
@@ -89,7 +71,7 @@ vim.api.nvim_set_keymap('n', '<C-A-b>', ':lua RunProgramIO()<CR>', { noremap = t
 -- Define la función para ejecutar el programa con temrinal de eleccion 
 function RunProgramTerminal()
     local program_name = vim.fn.expand('%:r')
-
+    
     -- Generar el comando para ejecutar el programa compilado en una nueva terminal
     local run_command = 'tilix -e /bin/bash -c \'./"' .. program_name .. '"; echo; read -p "Pulse_intro_para_salir..."\''
 
@@ -98,6 +80,30 @@ function RunProgramTerminal()
 end
 
 vim.cmd('command! XD lua RunProgramTerminal()')
+-- Define la función para ejecutar el programa con terminal de elección
+--function RunProgramTerminal()
+--    local file_extension = vim.fn.expand('%:e')
+--    local program_name = vim.fn.expand('%:r')
+--
+--    local run_command = ""
+--
+--    if file_extension == "cpp" then
+--        -- Generar el comando para ejecutar el programa C++ compilado
+--        run_command = 'tilix -e /bin/bash -c "g++ \'' .. program_name .. '.cpp\' -o \'' .. program_name .. '\' && ./\'' .. program_name .. '\'; echo; read -p \'Pulse_intro_para_salir...\'"'
+--    elseif file_extension == "py" then
+--        -- Generar el comando para ejecutar el programa Python
+--        run_command = 'tilix -e /bin/bash -c "python3 \'' .. program_name .. '.py\'; echo; read -p \'Pulse_intro_para_salir...\'"'
+--    else
+--        -- Mensaje de error si el archivo no es compatible
+--        print("Tipo de archivo no soportado. Solo se soportan archivos .cpp y .py.")
+--        return
+--    end
+--
+--    -- Ejecutar el comando en el sistema
+--    os.execute(run_command)
+--end
+--
+--vim.cmd('command! XD lua RunProgramTerminal()')
 
 ----------------------------------------------------------------------------------------------------------------------------
 
