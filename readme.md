@@ -26,12 +26,6 @@
 - GCC >=**13.2.1** (for compile your programs in C++ 17 onwars)
 - Nodejs >= **0.7.2**
 
-## Contents 
-
-- [Instalation] (#Install)
-
-
-
 
 # Install ⚒️ 
 It's very Easy!
