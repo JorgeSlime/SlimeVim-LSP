@@ -18,7 +18,7 @@
   <img src="https://github.com/JorgeSlime/SlimeVim/blob/main/media/Dashboard.png" alt="dashboard">
 </div>
 
-## ⚡️ Requirements
+## Requirements ⚡️ 
 
 - Neovim >= **0.9.5** 
 - Git >= **2.19.0** (for partial clones support)
@@ -26,7 +26,14 @@
 - GCC >=**13.2.1** (for compile your programs in C++ 17 onwars)
 - Nodejs >= **0.7.2**
 
-# ⚒️ Install 
+## Contents 
+
+- [Instalation](# Install ⚒️ )
+
+
+
+
+# Install ⚒️ 
 It's very Easy!
 First check if you have created the __"nvim"__ folder within __~/.config/__ next:
 
@@ -36,7 +43,7 @@ git clone https://github.com/JorgeSlime/SlimeVim-LSP.git && mv ./SlimeVim-LSP/* 
 ```
 __And Reay!!__
 
-# ✔️ Plugins
+# Plugins ✔️ 
 
 - [nvim-lsp-config](https://github.com/neovim/nvim-lspconfig)
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
@@ -53,7 +60,7 @@ __And Reay!!__
 - [Colorizer](https://github.com/norcalli/nvim-colorizer.lua)
 - [Notify](https://github.com/rcarriga/nvim-notify)
 
-## 📷 Videos and Screenshots 
+##  Videos and Screenshots 📷
 <details><summary>Click here</summary>  
 ○ Moonfly
 <br><img src="https://github.com/JorgeSlime/SlimeVim/blob/main/media/Moonfly.png"><br>
@@ -65,7 +72,7 @@ __And Reay!!__
 <br><img src="https://github.com/JorgeSlime/SlimeVim/blob/main/media/Telescope.png"><br>
 </details>
 
-## 📂 File Structure
+## File Structure 📂 
 <pre>
 ~/.config/nvim
 ├── lua
