@@ -35,7 +35,7 @@ Execute the command in your terminal:
 ```
 git clone https://github.com/JorgeSlime/SlimeVim-LSP.git && mv ./SlimeVim-LSP/* ~/.config/nvim/ && cd ~/.config/nvim/ && nvim init.lua
 ```
-__And Reay!!__
+__And Ready!!__
 
 # Plugins ✔️ 
 
