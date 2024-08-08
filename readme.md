@@ -28,7 +28,7 @@
 
 ## Contents 
 
-- [Instalation](# Install ⚒️ )
+- [Instalation] (#Install)
 
 
 
