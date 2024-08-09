@@ -12,10 +12,6 @@ map('n', '<C-n>', ':tabnew<CR>',opts)
 map('n', '<C-a>', '<Esc>ggVG<CR>', opts)
 -- Mapeo para simular Ctrl c
 map('v', '<C-c>', '"+y', { noremap = true })
----- Comando para abrir una terminal flotante
---vim.api.nvim_set_keymap('n', '<C-t>', ':ToggleTerm"<CR>', {silent = true})
---vim.api.nvim_set_keymap('i', '<C-t>', '<Esc>:ToggleTerm"<CR>', {silent = true})
---vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', {})
 
 -- Abrir Alpha Dashborad
 map('n', '<C-z>', ':Alpha<CR>', opts)
@@ -36,4 +32,9 @@ end
 
 -- Crear el mapeo de tecla en modo normal y modo visual
 vim.api.nvim_set_keymap('t', '<Esc>', '<cmd>lua my_escape_mapping()<CR>', { noremap = true, silent = true })
+
+
+
+
+
 

@@ -36,12 +36,26 @@ return {
             --        navic.attach(client, bufnr)
             --    end
             --end
+
             --FOR C++
             lspconfig.clangd.setup({
                 capabilities = capabilities,
                 --on_attach= on_attach
             })
-
+            --FOR PYTHON
+            --lspconfig.pylsp.setup{
+            --    capabilities=capabilities,
+            --    --settings = {
+            --    --    pylsp = {
+            --    --        --plugins = {
+            --    --        --    pycodestyle = {
+            --    --        --    ignore = {'W391'},
+            --    --        --    maxLineLength = 100
+            --    --        --    }
+            --    --        --} 
+            --    --    }
+            --    --}
+            --}
             -- FOR LUA
             lspconfig.lua_ls.setup({
                 capabilities = capabilities,

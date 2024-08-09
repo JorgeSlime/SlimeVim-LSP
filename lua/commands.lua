@@ -16,7 +16,41 @@ function OpenInput()
     vim.cmd('vsplit input.txt')
 end
 vim.cmd('command! INPUT lua OpenInput()')
+function OpenOutput()
+    -- Abrir el archivo outpit con los resultados de forma vetical 
+    vim.cmd('vsplit output.txt')
 
+    -- desabulita la edicion de este archivo
+    vim.bo.readonly = true
+    vim.bo.modifiable = false
+end
+vim.cmd('command! OUTPUT lua OpenOutput()')
+local function run_cpp_and_open_output()
+    -- Verifica si input.txt existe
+    if vim.fn.filereadable('input.txt') == 0 then
+        print("input.txt no encontrado")
+        return
+    end
+    local program_name  = vim.fn.expand('%:r')
+    -- Verifica si el archivo compilado (ejecutable) existe
+    local executable = "./" ..program_name  -- Cambia esto al nombre de tu ejecutable si es diferente
+    if vim.fn.executable(executable) == 0 then
+        print(executable .. " no encontrado")
+        return
+    end
+
+    -- Ejecuta el programa y redirige la salida a output.txt
+    local cmd = string.format("%s < input.txt > output.txt", executable)
+    os.execute(cmd)
+
+    -- Abre output.txt en una ventana dividida verticalmente
+    vim.cmd('vsplit output.txt')
+    -- devilita la edidicon ya que sera el resultado 
+    vim.bo.readonly = true
+    vim.bo.modifiable = false
+end
+-- Crear comando para ejecutar el programa C++ y abrir la salida
+vim.api.nvim_create_user_command('RunCpp', run_cpp_and_open_output, {})
 ---------------------------------------------------------------------
 
 function compile_program()
@@ -37,8 +71,27 @@ function compile_program()
 end
 vim.api.nvim_set_keymap('n', '<C-x>', '<cmd>lua compile_program()<cr>', { noremap = true, silent = true })
 vim.cmd('command! CC lua compile_program()')
--------------------------------------------------------------------------------------------------------------------------
 
+
+-------------------------------------------------------------------------------------------------------------------------
+function compile_program11()
+    local program_name = vim.fn.expand('%:r')
+    local compile_command = 'g++ -std=c++11 -O2 -Wall -Wextra -Wunknown-pragmas -DSLIME -o "' .. program_name .. '" "' .. vim.fn.expand('%') .. '"'
+    -- Compilar el programa
+    local compile_output = vim.fn.systemlist(compile_command)
+    -- Verificar si hubo errores de compilación
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_err_writeln('Error de compilación:')
+        for _, error_line in ipairs(compile_output) do
+            vim.api.nvim_err_writeln(error_line)
+        end
+    else
+        vim.notify("Programa compilado correctamente")
+        --print('Programa compilado correctamente')
+    end
+end
+vim.cmd('command! CC11 lua compile_program()')
+-------------------------------------------------------------------------------------------------------------------------
 -- Correr programa C++
 function RunProgram()
     local program_name = vim.fn.expand('%:r')
@@ -163,5 +216,8 @@ end
 vim.cmd('command! LLL lua CompileWithPdflatex()')
 
 
+-- OPEN IO PARA ABRIR VENTANA DLOTANTE TES1 
 
+
+-- in coming
 
