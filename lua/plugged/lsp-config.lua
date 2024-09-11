@@ -134,18 +134,12 @@ return {
 
             lspconfig.html.setup({
                 capabilities = capabilities,
-                on_attach = function (client, bufnr)
-                    client.server_capabilities.document_formatting = false
-                    on_attach(client, bufnr)
-                end,
-                init_options = {
-                    configurationSection = { "html", "css", "javascript" },
-                    embeddedLanguages = {
-                        css = true,
-                        javascript = true,
-                    },
-                    provideFormatter = true,
+                configurationSection = { "html", "css", "javascript" },
+                embeddedLanguages = {
+                    css = true,
+                    javascript = true,
                 },
+                provideFormatter = true,
             })
             --FRON CSS
             lspconfig.cssls.setup({

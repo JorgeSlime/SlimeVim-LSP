@@ -1,121 +1,13 @@
 extends c
-#TEMPLATE
-snippet hora "hora" b
-	/*
-	 * Author: Jorge_Slime
-	 * Created: `strftime('%d-%m-%Y')`
-	 * Time: `strftime('%H:%M:%S')`
-	*/
-	$1
-snippet IO20 "facilidad para IO"
-	inline namespace IO20{
-	    #define SFINAE(x, ...)                                                         \
-	        template <class, class = void> struct x : std::false_type {};              \
-	        template <class T> struct x<T, std::void_t<__VA_ARGS__>> : std::true_type {}
-	    
-	    SFINAE(DefaultI, decltype(std::cin >> std::declval<T &>()));
-	    SFINAE(DefaultO, decltype(std::cout << std::declval<T &>()));
-	    SFINAE(IsTuple, typename std::tuple_size<T>::type);
-	    SFINAE(Iterable, decltype(std::begin(std::declval<T>())));
-	
-	    template <auto &is> struct Reader {
-	        template <class T> void Impl(T &t) {
-	            if constexpr (DefaultI<T>::value) is >> t;
-	            else if constexpr (Iterable<T>::value) {
-	                for (auto &x : t) Impl(x);
-	            } else if constexpr (IsTuple<T>::value) {
-	                std::apply([this](auto &...args) { (Impl(args), ...); }, t);
-	            } else static_assert(IsTuple<T>::value, "No matching type for read");
-	        }
-	        template <class... Ts> void read(Ts &...ts) { ((Impl(ts)), ...); }
-	    };
-	
-	    template <class... Ts> void re(Ts &...ts) { Reader<cin>{}.read(ts...); }
-	
-	    #define def(t, args...)                                                        \
-	        t args;                                                                    \
-	        IO20::re(args);
-	    // Simple print multiparameter 
-	    template <class Head, class... Tail>
-	    inline void print(Head &&head, Tail &&...tail) {
-	        cout << head;
-	        if constexpr (sizeof...(tail) > 0) {
-	            cout << ' ';
-	            print(std::forward<Tail>(tail)...);
-	        } else { 
-	            cout << '\n';
-	        }
-	    }
-	    // Print all iterables, except maps
-	    template <typename X, typename = std::enable_if_t<!std::is_same_v<X, std::string>>>
-	    inline void print_(const X &c) {
-	        for (auto it = begin(c); it != end(c); ++it) 
-	            cout << *it << " \n"[next(it) == end(c)];
-	    }
-	    // Print vector to N
-	    template<typename T> 
-	    inline void print_(const vector<T> &v, size_t N) {
-	        for (size_t i = 0; i < N; ++i)
-	            cout << v[i] << " \n"[i == N - 1];
-	    }
-	    // Print static array
-	    template <typename T, size_t N> 
-	    inline void print_(const T (&v)[N]) {
-	        for (size_t i = 0; i < N; ++i) 
-	            cout << v[i] << " \n"[i == N - 1];
-	    }
-	    // Print static array to N
-	    template <typename T, size_t N> 
-	    inline void print_(const T(&v)[N], size_t n) {
-	        for (size_t i = 0; i < n; ++i) 
-	            cout << v[i] << " \n"[i == n - 1];
-	    }
-	}
-
-snippet RANDOM 
-	// Random number generator
-	const u64 SEED = chrono::steady_clock::now().time_since_epoch().count();
-	//random_shuffle  SEED;
-	mt19937_64 rng(SEED);
-	uniform_int_distribution<u64> rnd(100,199999);
-	template<typename X,typename T>
-	inline X random(T low, T high) {
-	    return std::uniform_int_distribution<X>{low, high}(rng);
-	}
-
-snippet ordered_set 
-	// siempre debajo el using namespace 
-	#include <ext/pb_ds/tree_policy.hpp>
-	#include <ext/pb_ds/assoc_container.hpp>
-	using namespace __gnu_pbds;
-	template<typename T>  using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-snippet raiz 
-	template <typename T> inline T sqrt_(T n){
-    	T x=sqrtl(n)+1;
-    	while(x*x>n) x--;
-    	return x;
-	}
+# UTILS
 snippet UTILS_DEFINE "definiciones utiles y rapidas"
-	//defines utiles 
-	#define MIN(v)                                           *min_element(all(v))
-	#define MAX(v)                                           *max_element(all(v))
-	#define LB(c, x)              distance((c).begin(), lower_bound(all(c), (x)))
-	#define UB(c, x)              distance((c).begin(), upper_bound(all(c), (x)))
-	#define UNIQUE(x) \
-	            sort(all(x)), x.erase(unique(all(x)), x.end()), x.shrink_to_fit()
-snippet FOR "for ultra premiun " b 
-	//multiparameter for 
-	#define                                  FOR1(a) for (auto _ = 0; _ < a; ++_)
-	#define                               FOR2(i, a) for (auto i = 0; i < a; ++i)
-	#define                            FOR3(i, a, b) for (auto i = a; i < b; ++i)
-	#define                      FOR4(i, a, b, c) for (auto i = a; i < b; i+=(c))
-	#define                           FOR1_R(a) for (auto i = (a)-1; i >= 0; --i)
-	#define                        FOR2_R(i, a) for (auto i = (a)-1; i >= 0; --i)
-	#define                     FOR3_R(i, a, b) for (auto i = (b)-1; i >= a; --i)
-	#define                                       overload4(a, b, c, d, e, ...) e
-	#define                                          overload3(a, b, c, d, ...) d
-	#define  forn(...) overload4(__VA_ARGS__, FOR4, FOR3, FOR2, FOR1)(__VA_ARGS__)
-	#define  rfor(...) overload3(__VA_ARGS__, FOR3_R, FOR2_R, FOR1_R)(__VA_ARGS__)
+    //defines utiles 
+    #define MIN(v)                                                     *min_element(begin(v),end(v))
+    #define MAX(v)                                                     *max_element(begin(v),end(v))
+    #define LB(c, x)                   distance((c).begin(), std::lower_bound(begin(c),end(c), (x)))
+    #define UB(c, x)                   distance((c).begin(), std::upper_bound(begin(c),end(c), (x)))
+    #define UNIQUE(x) \
+            std::sort(begin(x),end(x)), x.erase(unique(begin(x),end(x)), x.end()), x.shrink_to_fit()
 snippet UTIL_BITS 
 	//Bits utils
 	#define lsb_(x) __builtin_ctz(x) //bit menos sig
@@ -132,7 +24,11 @@ snippet INF
 	template <> constexpr __int128 INF<__int128> = __int128(INF<ll>) * INF<ll>;
 	template <> constexpr double INF<double> = INF<ll>;
 	template <> constexpr long double INF<long double> = INF<ll>;
-snippet INF20 
+snippet INF20 "simple"
+    //simple macro for INF values 
+    template<typename T> constexpr T INF = std::numeric_limits<T>::max();
+    template<typename T> constexpr T EPS = std::numeric_limits<T>::min();
+snippet INF20 "complete"
 	//multitype INF c++ 20
 	using u64 = uint64_t;
 	using i128 = __int128_t;
@@ -143,6 +39,47 @@ snippet INF20
 	template <> constexpr i128 INF<i128> = i128(INF<i64>) * INF<i64>;
 	template <> constexpr double INF<double> = INF<i64>;
 	template <> constexpr long double INF<long double> = INF<i64>;
+snippet INF 
+	//multitype INF
+	using ll=long long;
+	template <class T> constexpr T INF = 0;
+	template <> constexpr int INF<int> = 1'000'000'000;
+	template <> constexpr ll INF<ll> = ll(INF<int>) * INF<int> * 2;
+	template <> constexpr unsigned long long INF<unsigned long long> = INF<ll>;
+	template <> constexpr __int128 INF<__int128> = __int128(INF<ll>) * INF<ll>;
+	template <> constexpr double INF<double> = INF<ll>;
+	template <> constexpr long double INF<long double> = INF<ll>;
+snippet INF20 "simple"
+    //simple macro for INF values 
+    template<typename T> constexpr T INF = std::numeric_limits<T>::max();
+    template<typename T> constexpr T EPS = std::numeric_limits<T>::min();
+snippet INF20 "complete"
+	//multitype INF c++ 20
+	using u64 = uint64_t;
+	using i128 = __int128_t;
+	template <class T> constexpr T INF = 0;
+	template <> constexpr i32 INF<i32> = 1'000'000'000;
+	template <> constexpr i64 INF<i64> = i64(INF<i32>) * INF<i32> * 2;
+	template <> constexpr u64 INF<u64> = INF<i64>;
+	template <> constexpr i128 INF<i128> = i128(INF<i64>) * INF<i64>;
+	template <> constexpr double INF<double> = INF<i64>;
+	template <> constexpr long double INF<long double> = INF<i64>;
+snippet RANDOM 
+	// Random number generator
+	const u64 SEED = chrono::steady_clock::now().time_since_epoch().count();
+	//random_shuffle  SEED;
+	mt19937_64 rng(SEED);
+	std::uniform_int_distribution<u64> rnd(100,199999);
+	template<typename X,typename T>
+	inline X random(T low, T high) {
+	    return std::uniform_int_distribution<X>{low, high}(rng);
+	}
+snippet raiz 
+	template <typename T> inline T sqrt_(T n){
+    	T x=sqrtl(n)+1;
+    	while(x*x>n) x--;
+    	return x;
+	}
 snippet redondeo
 	template <typename T>
 	T floor(T a, T b) {
@@ -153,20 +90,26 @@ snippet redondeo
 	T ceil(T x, T y) {
 	  return floor(x + y - 1, y);
 	}
+snippet ordered_set 
+	// siempre debajo el using namespace 
+	#include <ext/pb_ds/tree_policy.hpp>
+	#include <ext/pb_ds/assoc_container.hpp>
+	using namespace __gnu_pbds;
+	template<typename T>  using ordered_set = tree<T, null_type, std::less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+#-------------------------------------------------------------------------------------------------------------------------
+#DEBUG
 snippet debu 
-	//==========-Debugguer-=============
-	#ifdef SLIME
-		#include "/home/jorge/slime_debug.h"
-	#else
-		#define deb(...)
-		#define debs(...)
-		#define debl(v,n)
-		#define TIME
-		#define CASE(...)
-		#define LINE
-		#define XD
-	#endif
-	//=================================
+    //------------Debugguer--------------
+    #ifdef SLIME
+    	#include "/home/jorge/slime_debug.h"
+    #else
+    	#define deb(...)
+    	#define debs(...)
+    	#define debl(v,n)
+        #define debug
+    	#define CASE(t)
+    #endif
+    //-----------------------------------
 snippet DEBUGGER11
 	//DEBUGGER ULTRA PREMIUM XD
 	template <class c>
@@ -186,7 +129,7 @@ snippet DEBUGGER11
 	    return 0;
 	}
 	struct debug {
-	#ifdef LOCAL
+	#ifdef SLIME 
 	    ~debug() {
 	        std::cerr << std::endl;
 	    }
@@ -225,46 +168,124 @@ snippet DEBUGGER11
 	#define debl(...) debug() << _l(__VA_ARGS__)
 	//=====================================================================
 	$1
+#-------------------------------------------------------------------------------------------------------------------------
+#TEMPLATE
+snippet hora "hora" b
+	/*
+	 * Author: Jorge_Slime
+	 * Created: `strftime('%d-%m-%Y')`
+	 * Time: `strftime('%H:%M:%S')`
+	*/
+	$1
+#-------------------------------------------------------------------------------------------------------------------------
+#INPUT_OUTPUT
+snippet IO20 "facilidad para IO"
+    inline namespace IO20{
+        #define SFINAE(x, ...)                                                         \
+            template <class, class = void> struct x : std::false_type {};              \
+            template <class T> struct x<T, std::void_t<__VA_ARGS__>> : std::true_type {}
+        
+        SFINAE(DefaultI, decltype(std::cin >> std::declval<T &>()));
+        SFINAE(DefaultO, decltype(std::cout << std::declval<T &>()));
+        SFINAE(IsTuple, typename std::tuple_size<T>::type);
+        SFINAE(Iterable, decltype(std::begin(std::declval<T>())));
+    
+        template <auto &is> struct Reader {
+            template <class T> void Impl(T &t) {
+                if constexpr (DefaultI<T>::value) is >> t;
+                else if constexpr (Iterable<T>::value) {
+                    for (auto &x : t) Impl(x);
+                } else if constexpr (IsTuple<T>::value) {
+                    std::apply([this](auto &...args) { (Impl(args), ...); }, t);
+                } else static_assert(IsTuple<T>::value, "No matching type for read");
+            }
+            template <class... Ts> void read(Ts &...ts) { ((Impl(ts)), ...); }
+        };
+    
+        template <class... Ts> void re(Ts &...ts) { Reader<std::cin>{}.read(ts...); }
+    
+        #define def(t, args...)                                                        \
+            t args;                                                                    \
+            IO20::re(args);
+        // Simple print multiparameter 
+        template <class Head, class... Tail>
+        inline void print(Head &&head, Tail &&...tail) {
+            std::cout << head;
+            if constexpr (sizeof...(tail) > 0) {
+                std::cout << ' ';
+                print(std::forward<Tail>(tail)...);
+            } else { 
+                std::cout << '\n';
+            }
+        }
+        // Print all iterables, except maps
+        template <typename X, typename = std::enable_if_t<!std::is_same_v<X, std::string>>>
+        inline void print_(const X &c) {
+            for (auto it = begin(c); it != end(c); ++it) 
+                std::cout << *it << " \n"[next(it) == end(c)];
+        }
+        // Print vector to N
+        template<typename T> 
+        inline void print_(const std::vector<T> &v, size_t N) {
+            for (size_t i = 0; i < N; ++i)
+                std::cout << v[i] << " \n"[i == N - 1];
+        }
+        // Print static array
+        template <typename T, size_t N> 
+        inline void print_(const T (&v)[N]) {
+            for (size_t i = 0; i < N; ++i) 
+                std::cout << v[i] << " \n"[i == N - 1];
+        }
+        // Print static array to N
+        template <typename T, size_t N> 
+        inline void print_(const T(&v)[N], size_t n) {
+            for (size_t i = 0; i < n; ++i) 
+                std::cout << v[i] << " \n"[i == n - 1];
+        }
+    }
+    $1
 snippet PRINT20
-	inline namespace Print{
-	    //simple print multiparameter 
-	    template <class Head, class... Tail>
-	    inline void print(Head &&head, Tail &&...tail) {
-	        cout << head;
-	        if constexpr (sizeof...(tail)>0) {
-	            cout << ' ';
-	            print(std::forward<Tail>(tail)...);
-	        } else { 
-	            cout << '\n';
-	        }
-	    }
-	    //print   Vector
-	    template <typename X, typename = std::enable_if_t<!std::is_same_v<X, std::string>>>
-	    inline void print_(const X &c){
-	        for(auto it=begin(c);it!=end(c);++it) 
-	            cout<<*it<<" \n"[next(it)==end(c)];
-	    } 
-	    //print vector to N
-	    template<typename T> 
-	    inline void print_(const vector<T> &v,i32 N){
-	        forn(i,N)
-	            cout<<v[i]<<" \n"[i==N-1];
-	    } 
-	    //print static array
-	    template <typename T, size_t N> 
-	    inline void print_(const T (&v)[N]) {
-	        forn(i,N) 
-	            cout << v[i] << " \n"[i==N-1];
-	    }
-	    //print static array to N
-	    template <typename T,size_t N> 
-	    inline void print_(const T(&v)[N],i32 n) {
-	        forn(i,n) 
-	            cout << v[i] << " \n"[i==n-1];
-	    }
-	}
-
-# SIMPLE TEMPLATE
+	// only print C++20 onwars
+    inline namespace Print{
+        //simple print multiparameter 
+        template <class Head, class... Tail>
+        inline void print(Head &&head, Tail &&...tail) {
+            std::cout << head;
+            if constexpr (sizeof...(tail)>0) {
+                std::cout << ' ';
+                print(std::forward<Tail>(tail)...);
+            } else { 
+                std::cout << '\n';
+            }
+        }
+        //print   Vector
+        template <typename X, typename = std::enable_if_t<!std::is_same_v<X, std::string>>>
+        inline void print_(const X &c){
+            for(auto it=begin(c);it!=end(c);++it) 
+                std::cout<<*it<<" \n"[next(it)==end(c)];
+        } 
+        //print vector to N
+        template<typename T> 
+        inline void print_(const std::vector<T> &v,i32 N){
+            for (size_t i = 0; i < N; ++i)
+                std::cout<<v[i]<<" \n"[i==N-1];
+        } 
+        //print static array
+    template <typename T, size_t N> 
+        inline void print_(const T (&v)[N]) {
+            for (size_t i = 0; i < N; ++i)
+                std::cout << v[i] << " \n"[i==N-1];
+        }
+        //print static array to N
+        template <typename T,size_t N> 
+        inline void print_(const T(&v)[N],i32 n) {
+            for (size_t i = 0; i < n; ++i)
+                std::cout << v[i] << " \n"[i==n-1];
+        }
+    }
+    $1
+#-------------------------------------------------------------------------------------------------------------------------
+#SIMPLE TEMPLATE
 snippet basic
 	#include "bits/stdc++.h"
 	using namespace std; 
@@ -288,27 +309,67 @@ snippet basic20
 	    return 0; 
 	}
 snippet simple
+    /*
+        - Author: Jorge_Slime
+        - Created: `strftime('%d-%m-%Y')` | `strftime('%H:%M:%S')`
+    */
+    
     #include "bits/stdc++.h"
-
-    using i32 = int32_t;
-    using i64 = int64_t;
-
-    bool cases = 0;
+    
+    // not using "using namespace std"  -please! :)
+    
+    #define sz(x)               (i32)x.size()
+    #define all(x)            begin(x),end(x)
+    #define eb                   emplace_back
+    #define pb                      push_back
+    
+    #ifdef SLIME
+        #include "/home/jorge/slime_debug.h"
+    #else
+        #define deb(...)  
+        #define debs(...)
+        #define debl(v,n) 
+        #define debug
+        #define CASE(t)
+    #endif
+    
+    using i32 = std::int32_t;
+    using i64 = std::int64_t;
+    
     auto solve()->void;
+    
     auto main()->signed{
-    	std::cin.tie(nullptr)->sync_with_stdio(false);
-    	i32 t=1;
-        //cin>>t; 
-        for(i32 i=0;i<t;i++){
+        std::cin.tie(nullptr)->sync_with_stdio(false);
+        std::cin.exceptions(std::ios::failbit | std::ios::badbit);
+        i32 test_case=1; 
+        //std::cin>>test_case;
+        for(i32 t = 0;t!=test_case;t++){ 
+            CASE(t);
             solve();
         }
-    	return 0;
+        return 0;
     }
-
-
+    
+    
+    
     auto solve()->void{
-        $1    
+        $1
     }
+    
+    // ningun sueño es muy grande y ningún soñador muy pequeño.
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 snippet simple11 
 	#include <bits/stdc++.h>
 	using namespace std;
@@ -400,7 +461,8 @@ snippet simple20
 	    }
 	    return 0;
 	}
-#COMPLETOS
+#-------------------------------------------------------------------------------------------------------------------------
+#COMPLETE 
 snippet Z11
 	//C++11... solve line -> 67
 	#include <bits/stdc++.h>
@@ -675,7 +737,6 @@ snippet Z17
 	   -"Tarde o temprano la disciplina supera al talento."
 	   -"Get A Life!!!!!"
 	*/
-
 snippet Z
 	/*
 	  - Author: Jorge_Slime
@@ -1184,7 +1245,7 @@ snippet Z
 
 snippet Z20 "wtf"   
     /*
-      - Author: Jorge_Slime
+       - Author: Jorge_Slime
        - Created: `strftime('%d-%m-%Y')` | `strftime('%H:%M:%S')`
 
     
@@ -1195,7 +1256,7 @@ snippet Z20 "wtf"
     
        3.- "La suerte es donde confluyen la preparación y la oportunidad." -Séneca
     
-          4.- "Tolerante con los demás estricto con uno mismo." -Marco Aurelio  
+       4.- "Tolerante con los demás estricto con uno mismo." -Marco Aurelio  
     */
     // template for c++20 Onwars 
     #pragma GCC optimize("O3,unroll-loops")
@@ -1347,11 +1408,7 @@ snippet Z20 "wtf"
 
 
 
-
-
-
-
-
+#-------------------------------------------------------------------------------------------------------------------------
 #TURBO
 snippet turbo 
 	std::ios_base::sync_with_stdio(0);
@@ -1992,10 +2049,11 @@ snippet fastIO20
 	#define cin io
 	#define cout io
 	$1
+#-------------------------------------------------------------------------------------------------------------------------
 #GRAPHS
 snippet Dfs 
 	const int N=1e5+7;
-	vector<int> G[N];
+	std::vector<int> G[N];
 	bool vis[N];
 	void Dfs(int v){
 		vis[v]=1;
@@ -2006,8 +2064,8 @@ snippet Dfs
 		}
 	}
 snippet Dfs_Lambda 
-	vector<vector<int>> G(n+1);
-	vector<bool> vis(n+1,0);
+	std::vector<std::vector<int>> G(n+1);
+	std::vector<bool> vis(n+1,0);
 	auto Dfs=[&vis,&G](auto&& self,int v)->void{
 		vis[v]=1;
 		for(auto&& u:G[v]){
@@ -2018,12 +2076,12 @@ snippet Dfs_Lambda
 	};
 snippet Bfs 
 	const int N=1e5+7;
-	vector<int> G[N];
+	std::vector<int> G[N];
 	int d[N],p[N];
 	bool vis[N];
 	template<typename T>
 	    void Bfs(T s){
-	        deque<T> q;
+	        std::deque<T> q;
 	        q.emplace_back(s);
 	        vis[s]=1;
 	        p[s]=-1;
@@ -2050,11 +2108,11 @@ snippet Bfs
 	    for(int i=sz(a)-1;~i;--i) cout<<a[i]<<" ";
 	*/
 snippet Bfs_Lambda 
-	V<V<int>> G(n+1);
-	V<bool> vis(n+1);
-	V<int> p(n+1),d(n+1);
+	std::vector<std::vector<int>> G(n+1);
+	std::vector<bool> vis(n+1);
+	std::vector<int> p(n+1),d(n+1);
 	auto Bfs=[&](int s)->void{
-	    queue<int> q;
+	    std::queue<int> q;
 	    q.emplace(s);
 	    vis[s]=1;
 	    p[s]=-1;
@@ -2071,55 +2129,118 @@ snippet Bfs_Lambda
 	        }
 	    }
 	};
-snippet Dijkstra
-	template<typename T,typename GT>
-	pair<V<T>,V<int>> Dijkstra(V<V<pair<GT,GT>>>& G,int s){
-	    auto N=(int)G.size();
-	    V<T> dist(N,INF<T>);
-	    V<int> par(N,-1);
-	    priority_queue<pair<T,int>,V<pair<T,int>>, greater<pair<T,int>>> q;
-	    dist[s]=0;
-	    q.emplace(0,s);
-	    while(!q.empty()){
-	        auto[dv,v]=q.top();
-	        q.pop();
-	        if(dv>dist[v]) continue;
-	        for(auto u:G[v]){
-	            auto [to,cost]=u;
-	            if(dist[v]+cost<dist[to]){
-	                dist[to]=dist[v]+cost;
-	                par[to]=v;
-	                q.emplace(dist[to],to);
-	            }
-	        }      
-	    }
-	    return{dist,par};
-	} 
-	V<int> camino(vector<int> &p,int t){
-	    V<int> v={t};
-	    while (p[v.back()] != -1) v.pb(p[v.back()]);
-	    reverse(all(v));
-	    return v;
-	}
-	//declaracion:
-	//auto [dist,par]=Dijkstra<type>(G,1);
-	//if(dist[n]==INF) -1
-	//auto ans=camino(p,n);
+snippet Dijkstra "devuleve padres y distacias"
+    //Depende of INF 
+    template<typename T,typename GT>
+    std::pair<std::vector<T>,std::vector<i32>> Dijkstra(std::vector<std::vector<std::pair<GT,GT>>>& G,i32 s){
+        auto N=(i32)G.size();
+        std::vector<T> dist(N,INF<T>);
+        std::vector<int> par(N,-1);
+        std::priority_queue<std::pair<T,i32>,std::vector<std::pair<T,i32>>, std::greater<std::pair<T,i32>>> q;
+        dist[s]=0;
+        q.emplace(0,s);
+        while(!q.empty()){
+            auto[dv,v]=q.top();
+            q.pop();
+            if(dv>dist[v]) continue;
+            for(auto u:G[v]){
+                auto [to,cost]=u;
+                if(dist[v]+cost<dist[to]){
+                    dist[to]=dist[v]+cost;
+                    par[to]=v;
+                    q.emplace(dist[to],to);
+                }
+            }      
+        }
+        return{dist,par};
+    } 
+    std::vector<i32> camino(std::vector<i32> &p,i32 t){
+        std::vector<i32> v={t};
+        while (p[v.back()] != -1) v.pb(p[v.back()]);
+        reverse(all(v));
+        return v;
+    }
+    //declaracion:
+    //auto [dist,par]=Dijkstra<type>(G,1);
+    //if(dist[n]==INF) -1
+    //auto ans=camino(p,n);
+#-------------------------------------------------------------------------------------------------------------------------
 #MATH
-snippet OPETATIONS
-	template <typename X>
-	struct OP{
-	    using TIPO=X;
-	    static constexpr X op(const X &x, const X &y) noexcept { return x+y; }
-	    static constexpr X power(const X &x, i64 n) noexcept { return X(n) * x; }
-	    static constexpr X init() { return X(INF<X>); }
-	};
+snippet Modular_Interger "integral modular directly"
+    template<typename T,i64 MOD>
+    struct Modular_Integer{
+        T value;
+        using mod = Modular_Integer;
+        Modular_Integer(T v = T(0)) {
+            value = v % MOD;
+            if (value < 0) value += MOD;
+        }
+     
+        mod& operator+=(const mod& other) {
+            value += other.value;
+            if (value >= MOD) value -= MOD;
+            return *this;
+        }
+     
+        mod& operator-=(const Modular_Integer& other) {
+            value -= other.value;
+            if (value < 0) value += MOD;
+            return *this;
+        }
+     
+        mod& operator*=(const Modular_Integer& other) {
+            value = value * other.value % MOD;
+            return *this;
+        }
+     
+        mod& operator/=(const Modular_Integer& other) {
+            return *this *= other.inv(); 
+        }
+     
+        mod operator-() const {
+            return mod(-value);
+        }
+        // en caso de division de aplica directamente el inverso modular 
+        mod inv() const {
+            return binpow(MOD - 2);
+        }
+        mod binpow(i64 exp) const {
+            mod result = 1;
+            mod base = value;
+            while (exp > 0) {
+                if (exp & 1) result *= base;
+                base *= base;
+                exp>>=1;
+            }
+            return result;
+        }
+    
+        friend mod operator+(mod a, const mod& b) { return a += b; }
+        friend mod operator-(mod a, const mod& b) { return a -= b; }
+        friend mod operator*(mod a, const mod& b) { return a *= b; }
+        friend mod operator/(mod a, const mod& b) { return a /= b; }
+        // output
+        friend std::ostream& operator<<(std::ostream& os, const mod& m) {
+            return os << m.value;
+        }
+        // input
+        friend std::istream& operator>>(std::istream& is, mod& m) {
+            T temp;
+            is >> temp;
+            m.value = temp % MOD;
+            if (m.value < 0) m.value += MOD;
+            return is;
+        }
+    };
+ 
+    constexpr i64 MOD = static_cast<i64>(1e9+7);
+    using Mint=Modular_Integer<i64,MOD>;
 snippet presum 
 	template <typename T, typename U>
-	V<T> presum(V<U> &A, bool off = 1) {
-	  int N = (int)A.size();
-	  V<T> B(N + 1);
-	  for(int i=0;i<N;i++) { B[i + 1] = B[i] + A[i]; }
+	std::vector<T> presum(std::vector<U> &A, bool off = 1) {
+	  i32 N = (i32)A.size();
+	  std::vector<T> B(N + 1);
+	  for(i32 i=0;i<N;i++) { B[i + 1] = B[i] + A[i]; }
 	  if (!off) B.erase(B.begin());
 	  return B;
 	}
@@ -2207,45 +2328,63 @@ snippet NCK
 	        return 1LL*numerator*inv(denominator)%MOD;
 	    }
 	};
+snippet NCK_Mint 
+    // Depends of Modular_Integer 
+    class NcK{   
+        public:  
+        T N;
+        std::vector<Mint> Factorial;
+        explicit NcK(T n) : N(n){
+            Factorial.assign(N + 1, 1);
+            Factorial[0] = 1;
+            for(auto i = 1; i <= N; i++){
+                Factorial[i] = Factorial[i - 1] * i;
+            }
+        }
+        Mint binom(T n, T k) noexcept{
+            if(k > n) return 0;
+            Mint numerator = Factorial[n];
+            Mint denominator= Factorial[k] * Factorial[n - k];
+            return numerator / denominator ;
+        }
+    };
 snippet cnt_table 
 	//table:
-	//decalration -> autp cnt=cnt_table<type>(v,n);
 	template<typename A ,typename T>
-	V<A> cnt_table(V<T>&v,int n,bool ok=1){
-	    V<T> c(ok?n+1:n);
-	    for(auto &&x:v){
+	std::vector<A> cnt_table(std::vector<T>& vec,i32 n,bool ok=1){
+	    std::vector<T> c(ok?n+1:n);
+	    for(auto&& x:vec){
 	        if(!ok) x--;
 	        c[x]++;
 	    }
 	    return c;
 	}
-	//declaration -> auto cnt=cnt_table(s);
 	template<typename A>
-	V<A> cnt_table(string&s,bool ok=1){
+	std::vector<A> cnt_table(std::string& s,bool ok=1){
 	    // 0 mayus 1 minus
-	    V<A> c(26,0);
+	    std::vector<A> c(26,0);
 	    for(auto &&x:s){
 	        ok ? c[x-'a']++ : c[x-'A']++;
 	    }
 	    return c;
 	}
 snippet criba 
-	const int N=1e6;
-	V<int> prime;
-	bool vis[N];
+	constexpr i32 N=1e6;
+	std::vector<i32> prime;
+	std::bitset<N> vis;
 	//Criba de Eratosthenes O(N*Log(N))
-	void criba(int n) {
-		for (int i=2;i<n;++i) {
+	void criba() {
+		for (i32 i=2;i<N;++i) {
 			if (!vis[i]) prime.emplace_back(i);
-			for (int j=2;i*j<n;++j)
+			for (i32 j=2;i*j<N;++j)
 				vis[i * j]=1;
 		}
 	}
 	//Criba Lineal O(N);
-	void criba_lineal(int n) {
-		for (int i = 2; i < n; ++i) {
+	void criba_lineal() {
+		for (i32 i = 2; i < N; ++i) {
 			if (!vis[i]) prime.push_back (i);
-			for (int j = 0; j < prime.size () && i * prime[j] < n; ++j) {
+			for (i32 j = 0; j < (i32)prime.size() && (i * prime[j]*1LL) < N; ++j) {
 				vis[i * prime[j]] = 1;
 				if (i % prime[j] == 0) break;
 			}
@@ -2254,9 +2393,9 @@ snippet criba
 #DATA_STRUCTURES
 snippet DSU 
 	struct unionFind {
-	  V<int> p;
+	  std::vector<int> p;
 	  unionFind(int n) : p(n, -1) {} //init 
-	  int findParent(int v) {
+	  i32 findParent(int v) {
 	    if (p[v] == -1) return v;
 	    return p[v] = findParent(p[v]);
 	  }
@@ -2283,17 +2422,17 @@ snippet Busqueda
 	    }
 	    return r;
 	}
-	int bs(const V<int>& a, int x) {
+	int bs(const std::vector<int>& a, i32 x) {
 	    auto f = [&](int i)->bool{
 	        return a[i] < x;  //lower -> a[i]<x  | upper-> a[i]<=x
 	    };
-	    int n = (int)a.size();
-	    int pos = find_first(0,n-1,f);
+	    i32 n = (int)a.size();
+	    i32 pos = find_first(0,n-1,f);
 	    //if (pos==n||a[pos]!=x) return n;
 	    return pos;
 	}
 snippet FenwickTree "Árbol Binario Indexado"
-	template < int N > struct fenwt {
+	template < i32 N > struct fenwt {
 		using F = long long ;
 		F a[N + 1];
 		void add (int x, F w) {
@@ -2334,195 +2473,243 @@ snippet sparce_table "tabla dispersa"
 	};
 
 snippet SegmentTree_Base
-	//seg tree base 
-	template<class Node>
-	struct SegTree{ 
-	    using OP=Node;
-	    using T=typename OP::Type;
-	    using TP=typename OP::Type_pos;
-	    V<Node> Tree;
-	    V<T> ar;
-	    TP log,size;
-	    explicit SegTree(V<T> &a,TP tam): size(tam){
-	        while (__builtin_popcount(size)!= 1) a.eb(0),size++;
-	        ar.assign(all(a));
-	        Tree.assign(size<<1,Node{OP::init()});
-	        init(ar);
-	    }
-	    inline constexpr void modify(T n){
-	        Tree[n]=OP::op(Tree[n<<1],Tree[n<<1|1]);
-	    }
-	    void init(const V<T> &a){
-	        for(auto i=0;i<size;i++) Tree[size+i]={ar[i]};
-	        for(int i=size-1;i;i--) modify(i);
-	    }
-	    void update(TP n, TP nl, TP nr, TP i, T v) {
-	        if(nr==nl) {
-	            ar[nl] = v;
-	            Tree[n] = {v};
-	        } 
-	        else {
-	            T mid = (nl + nr) >> 1;
-	            T pos = n<<1;
-	            if(i<=mid) update(pos, nl, mid,i,v);
-	            else update(pos | 1, mid + 1, nr,i,v);
-	            modify(n);
-	        }
-	    }
-	    void update(TP i ,TP v){
-	        update(1,0,size-1,i,v);
-	    }
-	    Node query(TP n, TP nl, TP nr, TP ql, TP qr) {
-	        if (ql <= nl && nr <= qr)  return Tree[n];
-	        TP mid = (nl + nr) >> 1;
-	        TP pos= n<<1;
-	        if (qr <= mid) return query(pos, nl, mid, ql, qr);
-	        if (ql > mid) return query(pos | 1, mid + 1, nr, ql, qr);
-	        return OP::op(query(pos , nl, mid, ql, qr), query(pos | 1, mid + 1, nr, ql, qr));
-	    }
-	    Node query(TP l, TP r){
-	        return query(1,0,size-1,l,r);
-	    }
-	};
-	template <typename X>
-	struct Node{
-	    X sum;
-	    using Type=X;
-	    using Type_pos=i32;
-	    //recuerda setear bien los valores
-	    static Node op(Node x, Node y) noexcept { 
-	        return {x.sum+y.sum};
-	    }
-	    static constexpr X power(const X &x, i64 n) noexcept { return X(n) * x; }
-	    static constexpr X init() { return X(0); }
-	};
-	$1
+    //SegmentTree_Base 
+    template<class Info>
+    struct SegTree{ 
+        using inf = Info;
+        using T = typename inf::Type;
+        using TP = typename inf::Type_pos;
+        std::vector<Info> Tree;
+        TP log,size;
+        explicit SegTree() : size(TP(0)) {}
+        explicit SegTree(TP tam) : size(tam) {
+            log = 1;
+            while((1<<log) < size) ++log;
+            size = 1<<log;
+            Tree.assign(size<<1,{inf::neutral()});
+        }
+        explicit SegTree(std::vector<T> &ar){
+            size = sz(ar);    
+            log = 1;
+            while((1<<log)<size) ++log;
+            size = 1<<log;
+            Tree.assign(size<<1,{inf::neutral()});
+            init(ar);
+        }
+        inline constexpr void modify(T n){
+            Tree[n] = inf::Merge(Tree[n << 1],Tree[n << 1 | 1]);
+        }
+        void init(const std::vector<T> &ar){
+            for(auto i=0;i<size;i++) Tree[size+i]={
+                ar[i]
+            }; // cantidad de operaciones
+            for(int i=size-1;i;i--) modify(i);
+        }
+        void update(TP n, TP nl, TP nr, TP i, T v) {
+            if(nr==nl) {
+                Tree[n] = {v};
+            } 
+            else {
+                T mid = (nl + nr) >> 1;
+                T pos = n<<1;
+                if(i<=mid) update(pos, nl, mid,i,v);
+                else update(pos | 1, mid + 1, nr,i,v);
+                modify(n);
+            }
+        }
+        void update(TP pos ,TP val){
+            update(1, 0, size-1, pos, val);
+        }
+        Info query(TP n, TP nl, TP nr, TP ql, TP qr) {
+            if (ql <= nl && nr <= qr)  return Tree[n];
+            TP mid = (nl + nr) >> 1;
+            TP pos = n<<1;
+            if (qr <= mid) return query(pos, nl, mid, ql, qr);
+            if (ql > mid) return query(pos | 1, mid + 1, nr, ql, qr);
+            return inf::Merge(query(pos , nl, mid, ql, qr), query(pos | 1, mid + 1, nr, ql, qr));
+        }
+        Info query(TP l, TP r){
+            return query(1,0,size-1,l,r);
+        }
+        // nos falta aprender min_right  & max_left :(
+    };
+    template <typename X>
+    struct Node{
+        using Type=X;
+        using Type_pos=i32;
+        X sum; 
+        static constexpr X op1(const X& x ,const X& y) noexcept{
+            return x + y; 
+        }
+        static constexpr Node Merge(const Node &x, const Node &y) noexcept{
+            return {
+                op1(x.sum,y.sum)
+            };
+        }
+        //NULL val para cada tipo de operacion 
+        static constexpr Node neutral() { 
+            return{
+                X(0)
+            };
+        }
+    };
+    $1
 snippet SegmentTree_Lazy "Lazy"
-	template<class Node>
-	struct Lazy_SegTree { 
-	    using OP = Node;
-	    using T = typename OP::Type;
-	    using TP = typename OP::Type_Pos;
-	    V<Node> Tree;
-	    TP size, log;
-	    Lazy_SegTree() {}
-	    explicit Lazy_SegTree(V<T> &a, TP tam) : size(tam) {
-	        log = 1;
-	        while ((1 << log) < size) ++log;
-	        size = 1 << log;
-	        Tree.assign(size << 1, {OP::neutral().val, OP::init()});
-	        init(a);
-	    }
-	    inline constexpr void modify(TP n) {
-	        Tree[n] = OP::op(Tree[n << 1], Tree[n << 1 | 1]);
-	    }
-	    void init(const V<T> &a) {
-	        for (auto i = 0; i < size; i++) Tree[size + i] = {i < a.size() ? a[i] : OP::neutral().val, OP::init()};
-	        for (auto i = size - 1; i; i--) modify(i);
-	    }
-	    void apply(TP node, T val, TP child) {
-	        // verificar que tipo de acumulacion tiene
-	        Tree[node].val += val; 
-	        if (node < size) {
-	            Tree[node].lazy = true;
-	            Tree[node].chi += val;
-	        }
-	    }
-	    void push(TP node, TP l, TP r) {
-	        TP mid = (l + r) >> 1;
-	        TP pos = node << 1; 
-	        apply(pos, Tree[node].chi, mid - l + 1);
-	        apply(pos | 1, Tree[node].chi, r - mid);
-	        Tree[node].lazy = false;
-	        Tree[node].chi = OP::init();
-	    }
-	    void update(TP node, TP nl, TP nr, TP ql, TP qr, T v) {
-	        if (nr < ql || qr < nl) return;
-	        if (ql <= nl && nr <= qr) {
-	            apply(node, v, nr - nl + 1);
-	            return;
-	        }
-	        if(Tree[node].lazy) push(node, nl, nr);
-	        TP mid = (nl + nr) >> 1;
-	        TP pos = node << 1;
-	        if (ql <= mid) update(pos, nl, mid, ql, qr, v);
-	        if (qr > mid) update(pos | 1, mid + 1, nr, ql, qr, v);
-	        modify(node);
-	    }
-	    void update(TP l, TP r, T v) {
-	        update(1, 0, size - 1, l, r, v);
-	    }
-	    Node query(TP node, TP nl, TP nr, TP ql, TP qr) {
-	        if(Tree[node].lazy) push(node,nl,nr);
-	        if (ql <= nl && nr <= qr) return Tree[node];
-	        TP mid = (nl + nr) >> 1;
-	        TP pos = node << 1;
-	        if (qr <= mid) return query(pos, nl, mid, ql, qr);
-	        if (ql > mid) return query(pos | 1, mid + 1, nr, ql, qr);
-	        return OP::op(query(pos, nl, mid, ql, qr), query(pos | 1, mid + 1, nr, ql, qr));
-	    }
-	    Node query(TP l, TP r) {
-	        return query(1, 0, size - 1, l, r);
-	    }
-	};
-	template <typename X>
-	struct Node {
-	    X val, chi;
-	    bool lazy;
-	    using Type = X;
-	    using Type_Pos = i32;
-		// setear correctamente los valores
-		static constexpr X suma(X &x, X &y){
-			return x+y;
-		}
-		static constexpr X mul(X &x, X &y){
-			return x*y;
-		}
-	    static Node op(const Node& x, const Node& y) noexcept {
-	        return {suma(x.val , y.val), init(), false};
-	    }
-	    static constexpr X init() { return X(0); }
-	    static constexpr Node neutral() { return Node{INF<i64>, init(), false}; }
-	};
-	$1
+    //Lazy_SegTree Base 
+    template<typename Info>
+    struct Lazy_SegTree { 
+        using inf = Info;
+        using T = typename Info::Type;
+        using TP = typename Info::Type_Pos;
+        std::vector<Info> Tree;
+        TP size, log;
+        explicit Lazy_SegTree() : size(TP(0)) {}
+        explicit Lazy_SegTree(TP tam) : size(tam){
+            log = 1;
+            while ((1 << log) < size) ++log;
+            size = 1 << log;
+            Tree.assign(size << 2, {inf::neutral()});   
+        }
+        explicit Lazy_SegTree(const std::vector<T> &ar){
+            log = 1;
+            size = sz(ar);
+            while ((1 << log) < size) ++log;
+            size = 1 << log;
+            Tree.assign(size << 1, {inf::neutral()});
+            init(ar);
+        }
+        inline constexpr void modify(TP n) {
+            Tree[n] = inf::Merge(Tree[n << 1], Tree[n << 1 | 1]);
+        }
+        void init(const std::vector<T> &ar) {
+            TP tam = (i32)ar.size();
+            for (auto i = 0; i < tam; i++) Tree[size + i] = {
+                ar[i]
+            };// se aumenta depende la cantidad de operaciones 
+            for (auto i = size - 1; i; i--) modify(i);
+        }
+        void apply(TP node, T val, TP child) {
+            // verificar que tipo de acumulacion tiene
+            Tree[node].val += val * child; // para este caso es incremento 
+            if (node < size) {
+                Tree[node].Has_Lazy = true;
+                Tree[node].Lazy_Value += val; // para este caso es incremento 
+            }
+        }
+        void propagate(TP node, TP l, TP r) {
+            if(Tree[node].Has_Lazy){
+                TP mid = (l + r) >> 1;
+                TP left = node << 1; 
+                TP right = node << 1 | 1;
+                if(l != r){
+                    apply(left, Tree[node].Lazy_Value, mid - l + 1);
+                    apply(right, Tree[node].Lazy_Value, r - mid);
+                }
+                Tree[node].Has_Lazy = false;
+                Tree[node].Lazy_Value = inf::init();
+            }
+        }
+        void update(TP node, TP nl, TP nr, TP ql, TP qr, T v) {
+            if (nr < ql || qr < nl) return;
+            if (ql <= nl && nr <= qr) {
+                apply(node, v, nr - nl + 1);
+                return;
+            }
+            propagate(node, nl, nr);
+            TP mid = (nl + nr) >> 1;
+            TP pos = node << 1;
+            if (ql <= mid) update(pos, nl, mid, ql, qr, v);
+            if (qr > mid) update(pos | 1, mid + 1, nr, ql, qr, v);
+            modify(node);
+        }
+        void update(TP l, TP r, T v) {
+            update(1, 0, size - 1, l, r, v);
+        }
+        Info query(TP node, TP nl, TP nr, TP ql, TP qr) {
+            propagate(node,nl,nr);
+            if (ql <= nl && nr <= qr) return Tree[node];
+            TP mid = (nl + nr) >> 1;
+            TP pos = node << 1;
+            if (qr <= mid) return query(pos, nl, mid, ql, qr);
+            if (ql > mid) return query(pos | 1, mid + 1, nr, ql, qr);
+            return inf::Merge(query(pos, nl, mid, ql, qr), query(pos | 1, mid + 1, nr, ql, qr));
+        }
+        Info query(TP l, TP r) {
+            return query(1, 0, size - 1, l, r);
+        }
+    };
+    template <typename X>
+    struct Node {
+        using Type = X;
+        using Type_Pos = i32;
+        //_------------------------------------------
+    
+        X val;
+        X Lazy_Value;
+        bool Has_Lazy;
+    
+        //_------------------------------------------
+        // setear correctamente los valores
+        static constexpr X op1(const X& x, const X& y) noexcept{
+            return x+y;
+        }
+        static constexpr X op2(const X& x, const X& y) noexcept{
+            return x*y;
+        }
+        static constexpr Node Merge(const Node& x, const Node& y) noexcept {
+            return {
+                op1(x.val , y.val), 
+                init(), // pa los hijos 
+                false // para el lazy
+            };
+        }
+        static constexpr X init() { return X(0); }
+        //NULL Por cada operacion
+        static constexpr Node neutral() { 
+            return {
+                init(), init(), false
+            };
+        }
+    };
+    $1
 #STRINGS
 snippet Sepstring "separa un getline y vol convierte en V<string>"
-	V<string> split(const string &s,char sep){
-	    stringstream ss(s);
-	    string tmp;
-	    V<string> text;
+	std::vector<std::string> split(const std::string &s,char sep){
+	    std::stringstream ss(s);
+	    std::string tmp;
+	    std::vector<std::string> text;
 	    while(getline(ss,tmp,sep)){ 
 	        if(!tmp.empty())
 	            text.eb(tmp);
 	    }
 	    return text;
 	}
-	V<string> split(const string &str, const string &sep) {
-	    vector<string> text;
+	std::vector<std::string> split(const std::string &str, const std::string &sep) {
+	    std::vector<std::string> text;
 	    size_t start = 0;
 	    size_t end = str.find(sep);
-	    while (end != string::npos) {
-	        string tmp= str.substr(start, end - start);
+	    while (end != std::string::npos) {
+	        std::string tmp= str.substr(start, end - start);
 	        if (!tmp.empty()) {
 	            text.eb(tmp);
 	        }
 	        start = end + sz(sep);
 	        end = str.find(sep, start);
 	    }
-	    string lasttmp = str.substr(start);
+	    std::string lasttmp = str.substr(start);
 	    if (!lasttmp.empty()) {
 	        text.eb(lasttmp);
 	    }
 	    return text;
 	}
 snippet z_funtion "funcion Z"
-	vector<int> z_function(string s) {
-	    int n = s.size();
-	    vector<int> z(n);
-	    int l = 0, r = 0;
-	    for(int i = 1; i < n; i++) {
+	std::vector<i32> z_function(const std::string s) {
+	    i32 n =(i32)s.size();
+	    std::vector<i32> z(n);
+	    i32 l = 0, r = 0;
+	    for(i32 i = 1; i < n; i++) {
 	        if(i < r) {
-	            z[i] = min(r - i, z[i - l]);
+	            z[i] = std::min<i32>(r - i, z[i - l]);
 	        }
 	        while(i + z[i] < n && s[z[i]] == s[i + z[i]]) {
 	            z[i]++;
@@ -2536,12 +2723,12 @@ snippet z_funtion "funcion Z"
 	}
 
 snippet kmp "Prefix function - Knuth-Morris-Pratt"
-	vector<int> kmp(string T, string P) {
-		int n = T.size(), m = P.size();
-		vector<int> b(m + 1),ans; 
+	std::vector<i32> kmp(const std::string T, std::string P) {
+		i32 n =(i32)T.size(), m =(i32)P.size();
+		std::vector<i32> b(m + 1),ans; 
 		b[0] = -1;
 		// Preprocess P
-		int i = 0, j = -1;
+		i32 i = 0, j = -1;
 		while (i < m) {
 			while (j >= 0 && P[i] != P[j]) j = b[j];
 			i++; j++;
@@ -2560,3 +2747,4 @@ snippet kmp "Prefix function - Knuth-Morris-Pratt"
 		}
 		return ans;
 	}
+

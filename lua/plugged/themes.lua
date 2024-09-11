@@ -26,5 +26,6 @@ return {
     { "blazkowolf/gruber-darker.nvim" },
 
     { "Alexis12119/nightly.nvim" },
+    { "iruzo/matrix-nvim" },
 }
 

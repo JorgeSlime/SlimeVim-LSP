@@ -55,7 +55,9 @@ vim.api.nvim_create_user_command('RunCpp', run_cpp_and_open_output, {})
 
 function compile_program()
     local program_name = vim.fn.expand('%:r')
-    local compile_command = 'g++ -std=c++20 -O2 -Wall -Wextra -Wunknown-pragmas -DSLIME -o "' .. program_name .. '" "' .. vim.fn.expand('%') .. '"'
+    --local compile_command = 'g++ -std=c++20 -O2 -Wall -Wextra -Wunknown-pragmas -DSLIME -o "' .. program_name .. '" "' .. vim.fn.expand('%') .. '"'
+    local compile_command = 'g++ -std=c++20 -O2 -Wall -Wextra -Wunknown-pragmas -DSLIME -I/home/jorge/.config/nvim/my_includes -o "' .. program_name .. '" "' .. vim.fn.expand('%') .. '"'
+
     -- Compilar el programa
     local compile_output = vim.fn.systemlist(compile_command)
     -- Verificar si hubo errores de compilación
@@ -101,7 +103,7 @@ function RunProgram()
     vim.cmd('terminal ' .. run_command)
     vim.cmd('startinsert')
 end
-vim.api.nvim_set_keymap('n', '<C-b>', '<cmd>lua RunProgram()<cr>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<C-b>', '<cmd>lua RunProgram()<cr>', { noremap = true, silent = true })
 
 ----------------------------------------------------------------------------------------------------------
 
@@ -126,13 +128,15 @@ function RunProgramTerminal()
     local program_name = vim.fn.expand('%:r')
     
     -- Generar el comando para ejecutar el programa compilado en una nueva terminal
-    local run_command = 'tilix -e /bin/bash -c \'./"' .. program_name .. '"; echo; read -p "Pulse_intro_para_salir..."\''
-
+    --local run_command = 'lxterminal -e /bin/bash -c \'./"' .. program_name .. '"; echo; read -p "Pulse_intro_para_salir..."\''
+    local run_command = 'lxterminal -e /bin/bash -c \'./"' .. program_name .. '"; echo; read -p "Pulse_intro_para_salir..."\'' .. ' &'
     -- Ejecutar el comando en el sistema
     os.execute(run_command)
 end
 
-vim.cmd('command! XD lua RunProgramTerminal()')
+vim.cmd('command! XD lua RunProgramTerminal()') --comannd
+vim.api.nvim_set_keymap('n', '<C-b>', ':lua RunProgramTerminal()<CR>', { noremap = true, silent = true })
+
 -- Define la función para ejecutar el programa con terminal de elección
 --function RunProgramTerminal()
 --    local file_extension = vim.fn.expand('%:e')
@@ -169,7 +173,7 @@ function RunProgramTerminalIO()
     local input_file = 'input.txt'
 
     -- Generar el comando para ejecutar el programa con el archivo de entrada
-    local run_command = 'tilix -e bash -c \'./"' .. program_name .. '" < "' .. input_file .. '"; echo; read -p "Pulse_intro_para_salir..."\''
+    local run_command = 'lxterminal -e bash -c \'./"' .. program_name .. '" < "' .. input_file .. '"; echo; read -p "Pulse_intro_para_salir..."\''
 
     -- Ejecutar el comando en la terminal
     local handle = io.popen(run_command)
@@ -181,10 +185,45 @@ function RunProgramTerminalIO()
 end
 
 vim.cmd('command! XDD lua RunProgramTerminalIO()')
+vim.api.nvim_set_keymap('n', '<C-A-b>', ':lua RunProgramTerminalIO()<CR>', { noremap = true, silent = true })
 
 
-------------------------------------------------------------------{
+------------------------------------------------------------------
+function RunProgramTerminalPY()
+    -- Obtener el nombre del programa compilado
+    local program_name = vim.fn.expand('%:r')
 
+    -- Nombres de los archivos de entrada y salida
+    local input_file = 'input.txt'
+    local output_file = 'output.txt'
+
+    -- Nombre del archivo de Python a ejecutar
+    local python_script = '/home/jorge/.config/nvim/lua/testcase.py'
+
+    -- Generar el comando para ejecutar el script de Python con los argumentos necesarios
+    local run_command = 'tilix -e bash -c \'python3 "' .. python_script .. '" "' .. program_name .. '.cpp" "' .. input_file .. '" "' .. output_file .. '"; echo; read -p "Pulse_intro_para_salir..."\''
+
+    -- Ejecutar el comando en la terminal
+    local handle = io.popen(run_command)
+    local result = handle:read("*a")
+    handle:close()
+
+    -- Mostrar el resultado en un mensaje
+    vim.api.nvim_out_write(result)
+end
+
+vim.cmd('command! TESTRUNNER lua RunProgramTerminalPY()')
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------
 
 -- Define la función para compilar el documento LaTeX con pdflatex y -shell-escape
 function CompileWithPdflatex()
